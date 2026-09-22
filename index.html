@@ -43,6 +43,8 @@
             --muted: #9999A3;
 
             --accent: #C8A96B;
+
+            --accent-soft: rgba(200,169,107,.12);
         }
 
 
@@ -81,7 +83,7 @@
             z-index: 10;
 
             background:
-                rgba(11, 11, 13, .88);
+                rgba(11,11,13,.88);
 
             backdrop-filter:
                 blur(20px);
@@ -116,13 +118,11 @@
 
             color:
                 var(--muted);
-
-            letter-spacing: .3px;
         }
 
 
         /* =========================
-           PRODUCTS
+           PRODUCTS GRID
         ========================= */
 
         .products {
@@ -138,6 +138,10 @@
         }
 
 
+        /* =========================
+           PRODUCT CARD
+        ========================= */
+
         .product {
 
             overflow: hidden;
@@ -149,8 +153,6 @@
 
             border:
                 1px solid var(--border);
-
-            cursor: pointer;
 
             transition:
                 transform .2s ease,
@@ -177,13 +179,15 @@
             object-fit: cover;
 
             display: block;
+
+            cursor: pointer;
         }
 
 
         .product-info {
 
             padding:
-                12px 13px 15px;
+                12px 13px 14px;
         }
 
 
@@ -197,25 +201,92 @@
 
             color:
                 var(--text);
+
+            margin-bottom:
+                10px;
         }
 
 
-        .view {
+        /* =========================
+           CARD BUTTONS
+        ========================= */
 
-            margin-top: 5px;
+        .product-actions {
 
-            font-size: 11px;
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 7px;
+        }
+
+
+        .product-button {
+
+            border: 0;
+
+            border-radius: 10px;
+
+            padding:
+                9px 5px;
+
+            background:
+                var(--surface-2);
+
+            border:
+                1px solid var(--border);
+
+            color:
+                var(--text);
+
+            font-family:
+                inherit;
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .product-button:active {
+
+            transform:
+                scale(.95);
+        }
+
+
+        .gallery-button {
 
             color:
                 var(--accent);
         }
 
 
+        .details-button {
+
+            background:
+                var(--accent);
+
+            color:
+                #111;
+
+            border-color:
+                var(--accent);
+
+            font-weight:
+                bold;
+        }
+
+
         /* =========================
-           MODAL
+           OVERLAY
         ========================= */
 
-        .modal {
+        .overlay {
 
             position: fixed;
 
@@ -224,7 +295,7 @@
             z-index: 100;
 
             background:
-                rgba(0, 0, 0, .88);
+                rgba(0,0,0,.88);
 
             display: none;
 
@@ -236,13 +307,17 @@
         }
 
 
-        .modal.active {
+        .overlay.active {
 
             display: flex;
         }
 
 
-        .modal-box {
+        /* =========================
+           GALLERY MODAL
+        ========================= */
+
+        .gallery-modal {
 
             width: 100%;
 
@@ -250,9 +325,9 @@
 
             max-height: 94vh;
 
-            overflow-y: auto;
-
             border-radius: 24px;
+
+            overflow: hidden;
 
             background:
                 var(--surface);
@@ -262,14 +337,8 @@
 
             box-shadow:
                 0 30px 100px rgba(0,0,0,.7);
-
-            overflow: hidden;
         }
 
-
-        /* =========================
-           GALLERY
-        ========================= */
 
         .gallery {
 
@@ -292,7 +361,9 @@
         }
 
 
-        /* CLOSE */
+        /* =========================
+           CLOSE BUTTON
+        ========================= */
 
         .close {
 
@@ -325,7 +396,9 @@
         }
 
 
-        /* ARROWS */
+        /* =========================
+           GALLERY ARROWS
+        ========================= */
 
         .arrow {
 
@@ -369,7 +442,9 @@
         }
 
 
-        /* COUNTER */
+        /* =========================
+           IMAGE COUNTER
+        ========================= */
 
         .counter {
 
@@ -399,78 +474,191 @@
 
 
         /* =========================
-           DETAILS
+           GALLERY FOOTER
         ========================= */
 
-        .details {
+        .gallery-footer {
 
             padding:
-                19px;
+                16px;
         }
 
 
-        .details h2 {
+        .gallery-title {
 
-            margin: 0;
+            font-size: 17px;
 
-            font-size: 20px;
+            font-weight: bold;
 
             color:
                 var(--text);
         }
 
 
-        .details p {
+        .gallery-description {
 
-            margin:
-                10px 0 20px;
+            margin-top: 5px;
 
             color:
                 var(--muted);
 
-            font-size: 13px;
-
-            line-height: 2;
-
-            white-space:
-                pre-line;
-
-            max-height:
-                130px;
-
-            overflow-y:
-                auto;
-
-            padding-left:
-                6px;
+            font-size: 12px;
         }
 
 
         /* =========================
-           DESCRIPTION SCROLLBAR
+           DETAILS MODAL
         ========================= */
 
-        .details p::-webkit-scrollbar {
+        .details-modal {
 
-            width: 3px;
-        }
+            width: 100%;
 
+            max-width: 500px;
 
-        .details p::-webkit-scrollbar-thumb {
+            max-height: 92vh;
+
+            overflow-y: auto;
+
+            border-radius: 24px;
 
             background:
-                var(--accent);
+                var(--surface);
 
-            border-radius:
-                10px;
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.7);
+
+            position: relative;
         }
 
 
         /* =========================
-           BUTTONS
+           DETAILS HEADER
         ========================= */
 
-        .actions {
+        .details-header {
+
+            padding:
+                22px 20px 18px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            position: relative;
+        }
+
+
+        .details-label {
+
+            font-size: 10px;
+
+            color:
+                var(--accent);
+
+            margin-bottom:
+                7px;
+
+            letter-spacing:
+                .5px;
+        }
+
+
+        .details-title {
+
+            margin: 0;
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+            color:
+                var(--text);
+        }
+
+
+        .details-subtitle {
+
+            margin-top: 7px;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================
+           DETAILS LIST
+        ========================= */
+
+        .details-list {
+
+            padding:
+                8px 20px 18px;
+        }
+
+
+        .detail-row {
+
+            display: grid;
+
+            grid-template-columns:
+                105px 1fr;
+
+            gap: 12px;
+
+            padding:
+                13px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+
+            line-height:
+                1.8;
+        }
+
+
+        .detail-row:last-child {
+
+            border-bottom:
+                none;
+        }
+
+
+        .detail-key {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        .detail-value {
+
+            color:
+                var(--text);
+
+            font-size: 13px;
+
+            font-weight:
+                600;
+        }
+
+
+        /* =========================
+           DETAILS ACTIONS
+        ========================= */
+
+        .details-actions {
+
+            padding:
+                0 20px 20px;
 
             display: grid;
 
@@ -481,10 +669,10 @@
         }
 
 
-        .action {
+        .details-action {
 
             padding:
-                13px;
+                13px 8px;
 
             border-radius:
                 14px;
@@ -495,6 +683,15 @@
             text-decoration:
                 none;
 
+            font-family:
+                inherit;
+
+            font-size:
+                12px;
+
+            font-weight:
+                bold;
+
             color:
                 var(--text);
 
@@ -503,26 +700,10 @@
 
             border:
                 1px solid var(--border);
-
-            font-size:
-                13px;
-
-            font-weight:
-                bold;
-
-            transition:
-                .2s ease;
         }
 
 
-        .action:active {
-
-            transform:
-                scale(.97);
-        }
-
-
-        .action-map {
+        .details-action.map {
 
             grid-column:
                 1 / -1;
@@ -539,7 +720,7 @@
 
 
         /* =========================
-           RESPONSIVE
+           MOBILE
         ========================= */
 
         @media(max-width:340px) {
@@ -549,11 +730,22 @@
                 grid-template-columns:
                     1fr;
             }
+
+
+            .detail-row {
+
+                grid-template-columns:
+                    90px 1fr;
+
+                gap: 8px;
+            }
+
         }
 
     </style>
 
 </head>
+
 
 
 <body>
@@ -589,24 +781,22 @@
 
 
     <!-- =========================
-         PRODUCT MODAL
+         GALLERY OVERLAY
     ========================= -->
 
     <div
-        class="modal"
-        id="modal">
+        class="overlay"
+        id="galleryOverlay">
 
-        <div class="modal-box">
+        <div class="gallery-modal">
 
-
-            <!-- GALLERY -->
 
             <div class="gallery">
 
 
                 <button
                     class="close"
-                    onclick="closeProduct()">
+                    onclick="closeGallery()">
 
                     ×
 
@@ -624,7 +814,7 @@
                     onclick="nextImage()">
 
                     ›
-                    
+
                 </button>
 
 
@@ -642,62 +832,105 @@
                     id="counter">
                 </div>
 
-
             </div>
 
 
+            <div class="gallery-footer">
 
-            <!-- DETAILS -->
-
-            <div class="details">
-
-
-                <h2
-                    id="productTitle">
-                </h2>
-
-
-                <p
-                    id="productDescription">
-                </p>
-
-
-
-                <div class="actions">
-
-
-                    <a
-                        class="action"
-                        href="https://t.me/ehsanfard_dev">
-
-                        💬 مشاوره
-
-                    </a>
-
-
-                    <a
-                        class="action"
-                        href="https://wa.me/989124107390">
-
-                        📱 واتساپ
-
-                    </a>
-
-
-                    <a
-                        class="action action-map"
-                        href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d">
-
-                        📍 مسیریابی تا فروشگاه →
-
-                    </a>
-
-
+                <div
+                    class="gallery-title"
+                    id="galleryTitle">
                 </div>
 
+                <div
+                    class="gallery-description"
+                    id="galleryDescription">
+                </div>
 
             </div>
 
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         DETAILS OVERLAY
+    ========================= -->
+
+    <div
+        class="overlay"
+        id="detailsOverlay">
+
+        <div class="details-modal">
+
+
+            <button
+                class="close"
+                onclick="closeDetails()">
+
+                ×
+
+            </button>
+
+
+            <div class="details-header">
+
+                <div class="details-label">
+                    مشخصات محصول
+                </div>
+
+                <h2
+                    class="details-title"
+                    id="detailsTitle">
+                </h2>
+
+                <div
+                    class="details-subtitle"
+                    id="detailsSubtitle">
+                </div>
+
+            </div>
+
+
+            <div
+                class="details-list"
+                id="detailsList">
+            </div>
+
+
+            <div class="details-actions">
+
+
+                <a
+                    class="details-action"
+                    href="https://t.me/ehsanfard_dev">
+
+                    💬 مشاوره
+
+                </a>
+
+
+                <a
+                    class="details-action"
+                    href="https://wa.me/989124107390">
+
+                    📱 واتساپ
+
+                </a>
+
+
+                <a
+                    class="details-action map"
+                    href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d">
+
+                    📍 مسیریابی تا فروشگاه →
+
+                </a>
+
+
+            </div>
 
         </div>
 
@@ -727,17 +960,61 @@
 
 
         /* =========================
-           PRODUCTS
+           PRODUCTS DATA
         ========================= */
 
         const products = [
 
 
+            /* =====================
+               PRODUCT 100
+            ===================== */
+
             {
+
                 name: "کد 100",
 
                 description:
-                    "باکسی اورسایز چاپ پیش و رو\n\nمناسب سن 10 تا 14 سال\nجنس: با کیفیت\nمدل: آزاد و اورسایز\nاستایل: اسپرت و روزمره",
+                    "باکسی اورسایز چاپ پیش و رو",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "باکسی اورسایز چاپ پیش و رو"
+                    ],
+
+                    [
+                        "جنس",
+                        "دورس پنبه‌ای"
+                    ],
+
+                    [
+                        "سایز",
+                        "10 تا 14 سال"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "مشکی، کرم، طوسی"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ],
+
+                    [
+                        "نوع چاپ",
+                        "چاپ جلو و پشت"
+                    ]
+
+                ],
 
                 images: [
 
@@ -756,11 +1033,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 2
+            ===================== */
+
             {
+
                 name: "محصول دوم",
 
                 description:
                     "توضیحات محصول دوم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول دوم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -775,11 +1091,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 3
+            ===================== */
+
             {
+
                 name: "محصول سوم",
 
                 description:
                     "توضیحات محصول سوم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول سوم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -794,11 +1149,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 4
+            ===================== */
+
             {
+
                 name: "محصول چهارم",
 
                 description:
                     "توضیحات محصول چهارم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول چهارم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -813,11 +1207,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 5
+            ===================== */
+
             {
+
                 name: "محصول پنجم",
 
                 description:
                     "توضیحات محصول پنجم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول پنجم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -832,11 +1265,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 6
+            ===================== */
+
             {
+
                 name: "محصول ششم",
 
                 description:
                     "توضیحات محصول ششم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول ششم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -851,11 +1323,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 7
+            ===================== */
+
             {
+
                 name: "محصول هفتم",
 
                 description:
                     "توضیحات محصول هفتم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول هفتم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -870,11 +1381,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 8
+            ===================== */
+
             {
+
                 name: "محصول هشتم",
 
                 description:
                     "توضیحات محصول هشتم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول هشتم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -889,11 +1439,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 9
+            ===================== */
+
             {
+
                 name: "محصول نهم",
 
                 description:
                     "توضیحات محصول نهم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول نهم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -908,11 +1497,50 @@
             },
 
 
+            /* =====================
+               PRODUCT 10
+            ===================== */
+
             {
+
                 name: "محصول دهم",
 
                 description:
                     "توضیحات محصول دهم",
+
+                details: [
+
+                    [
+                        "مدل",
+                        "مدل محصول دهم"
+                    ],
+
+                    [
+                        "جنس",
+                        "جنس محصول"
+                    ],
+
+                    [
+                        "سایز",
+                        "سایزبندی محصول"
+                    ],
+
+                    [
+                        "رنگ‌بندی",
+                        "رنگ‌های موجود"
+                    ],
+
+                    [
+                        "تعداد در جین",
+                        "12 عدد"
+                    ],
+
+                    [
+                        "تعداد در کارتن",
+                        "24 عدد"
+                    ]
+
+                ],
 
                 images: [
 
@@ -931,7 +1559,7 @@
 
 
         /* =========================
-           RENDER PRODUCTS
+           ELEMENTS
         ========================= */
 
         const productsContainer =
@@ -939,6 +1567,65 @@
                 "products"
             );
 
+
+        const galleryOverlay =
+            document.getElementById(
+                "galleryOverlay"
+            );
+
+
+        const detailsOverlay =
+            document.getElementById(
+                "detailsOverlay"
+            );
+
+
+        const galleryImage =
+            document.getElementById(
+                "galleryImage"
+            );
+
+
+        const galleryTitle =
+            document.getElementById(
+                "galleryTitle"
+            );
+
+
+        const galleryDescription =
+            document.getElementById(
+                "galleryDescription"
+            );
+
+
+        const counter =
+            document.getElementById(
+                "counter"
+            );
+
+
+        const detailsTitle =
+            document.getElementById(
+                "detailsTitle"
+            );
+
+
+        const detailsSubtitle =
+            document.getElementById(
+                "detailsSubtitle"
+            );
+
+
+        const detailsList =
+            document.getElementById(
+                "detailsList"
+            );
+
+
+
+        /* =========================
+           RENDER PRODUCTS
+        ========================= */
 
         products.forEach(
             (product, index) => {
@@ -959,28 +1646,47 @@
                     <img
                         class="product-image"
                         src="${product.images[0]}"
-                        alt="${product.name}">
+                        alt="${product.name}"
+                        onclick="openGallery(${index})">
+
 
                     <div class="product-info">
 
+
                         <div class="product-name">
+
                             ${product.name}
+
                         </div>
 
-                        <div class="view">
-                            مشاهده تصاویر ←
+
+                        <div class="product-actions">
+
+
+                            <button
+                                class="product-button gallery-button"
+                                onclick="openGallery(${index})">
+
+                                🖼 مشاهده تصاویر
+
+                            </button>
+
+
+                            <button
+                                class="product-button details-button"
+                                onclick="openDetails(${index})">
+
+                                ✦ جزئیات
+
+                            </button>
+
+
                         </div>
+
 
                     </div>
 
                 `;
-
-
-                card.onclick = () => {
-
-                    openProduct(index);
-
-                };
 
 
                 productsContainer.appendChild(
@@ -1001,42 +1707,12 @@
         let currentImage = 0;
 
 
-        const modal =
-            document.getElementById(
-                "modal"
-            );
-
-
-        const galleryImage =
-            document.getElementById(
-                "galleryImage"
-            );
-
-
-        const productTitle =
-            document.getElementById(
-                "productTitle"
-            );
-
-
-        const productDescription =
-            document.getElementById(
-                "productDescription"
-            );
-
-
-        const counter =
-            document.getElementById(
-                "counter"
-            );
-
-
 
         /* =========================
-           OPEN PRODUCT
+           OPEN GALLERY
         ========================= */
 
-        function openProduct(index) {
+        function openGallery(index) {
 
             currentProduct =
                 index;
@@ -1046,12 +1722,13 @@
 
             updateGallery();
 
-            modal.classList.add(
+            galleryOverlay.classList.add(
                 "active"
             );
 
             document.body.style.overflow =
                 "hidden";
+
         }
 
 
@@ -1074,11 +1751,11 @@
                 ];
 
 
-            productTitle.textContent =
+            galleryTitle.textContent =
                 product.name;
 
 
-            productDescription.textContent =
+            galleryDescription.textContent =
                 product.description;
 
 
@@ -1152,12 +1829,12 @@
 
 
         /* =========================
-           CLOSE PRODUCT
+           CLOSE GALLERY
         ========================= */
 
-        function closeProduct() {
+        function closeGallery() {
 
-            modal.classList.remove(
+            galleryOverlay.classList.remove(
                 "active"
             );
 
@@ -1169,18 +1846,127 @@
 
 
         /* =========================
-           CLOSE BY BACKGROUND
+           OPEN DETAILS
         ========================= */
 
-        modal.addEventListener(
+        function openDetails(index) {
+
+            const product =
+                products[index];
+
+
+            detailsTitle.textContent =
+                product.name;
+
+
+            detailsSubtitle.textContent =
+                product.description;
+
+
+            detailsList.innerHTML =
+                "";
+
+
+            product.details.forEach(
+                item => {
+
+
+                    const row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.className =
+                        "detail-row";
+
+
+                    row.innerHTML = `
+
+                        <div class="detail-key">
+
+                            ${item[0]}
+
+                        </div>
+
+
+                        <div class="detail-value">
+
+                            ${item[1]}
+
+                        </div>
+
+                    `;
+
+
+                    detailsList.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+
+            detailsOverlay.classList.add(
+                "active"
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+
+        /* =========================
+           CLOSE DETAILS
+        ========================= */
+
+        function closeDetails() {
+
+            detailsOverlay.classList.remove(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+
+        /* =========================
+           CLOSE OVERLAYS BY BACKGROUND
+        ========================= */
+
+        galleryOverlay.addEventListener(
             "click",
             function(event) {
 
                 if (
-                    event.target === modal
+                    event.target ===
+                    galleryOverlay
                 ) {
 
-                    closeProduct();
+                    closeGallery();
+
+                }
+
+            }
+        );
+
+
+        detailsOverlay.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    detailsOverlay
+                ) {
+
+                    closeDetails();
 
                 }
 
