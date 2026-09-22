@@ -9,7 +9,8 @@
           content="width=device-width,
                    initial-scale=1.0,
                    maximum-scale=1.0,
-                   user-scalable=no">
+                   user-scalable=no,
+                   viewport-fit=cover">
 
     <title>ویترین فروشگاه</title>
 
@@ -21,6 +22,45 @@
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+        }
+
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            background: #0B0B0D;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            width: 100%;
+            min-height: 100vh;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            background:
+                var(--bg);
+
+            color:
+                var(--text);
+
+            overflow-x: hidden;
+
+            -webkit-text-size-adjust: 100%;
+        }
+
+
+        button,
+        a,
+        input,
+        textarea {
+            font-family: inherit;
         }
 
 
@@ -45,25 +85,8 @@
             --accent: #C8A96B;
 
             --accent-soft: rgba(200,169,107,.12);
-        }
 
-
-        body {
-
-            margin: 0;
-
-            font-family:
-                Tahoma,
-                Arial,
-                sans-serif;
-
-            background:
-                var(--bg);
-
-            color:
-                var(--text);
-
-            min-height: 100vh;
+            --page-max: 1400px;
         }
 
 
@@ -73,8 +96,12 @@
 
         .header {
 
+            width: 100%;
+
             padding:
-                25px 18px 20px;
+                calc(20px + env(safe-area-inset-top))
+                18px
+                18px;
 
             position: sticky;
 
@@ -83,9 +110,12 @@
             z-index: 10;
 
             background:
-                rgba(11,11,13,.88);
+                rgba(11,11,13,.90);
 
             backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
                 blur(20px);
 
             border-bottom:
@@ -95,7 +125,7 @@
 
         .brand {
 
-            font-size: 24px;
+            font-size: clamp(20px, 3vw, 26px);
 
             font-weight: 800;
 
@@ -105,12 +135,14 @@
 
             color:
                 var(--text);
+
+            line-height: 1.5;
         }
 
 
         .subtitle {
 
-            margin-top: 7px;
+            margin-top: 5px;
 
             text-align: center;
 
@@ -118,16 +150,27 @@
 
             color:
                 var(--muted);
+
+            line-height: 1.7;
         }
 
 
         /* =========================
-           PRODUCTS GRID
+           PRODUCTS WRAPPER
         ========================= */
 
         .products {
 
-            padding: 16px;
+            width: 100%;
+
+            max-width:
+                var(--page-max);
+
+            margin:
+                0 auto;
+
+            padding:
+                16px;
 
             display: grid;
 
@@ -144,6 +187,8 @@
 
         .product {
 
+            min-width: 0;
+
             overflow: hidden;
 
             border-radius: 18px;
@@ -157,13 +202,17 @@
             transition:
                 transform .2s ease,
                 border-color .2s ease;
+
+            display: flex;
+
+            flex-direction: column;
         }
 
 
         .product:active {
 
             transform:
-                scale(.97);
+                scale(.985);
 
             border-color:
                 var(--accent);
@@ -181,6 +230,9 @@
             display: block;
 
             cursor: pointer;
+
+            background:
+                #101014;
         }
 
 
@@ -188,6 +240,12 @@
 
             padding:
                 12px 13px 14px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            flex: 1;
         }
 
 
@@ -204,32 +262,45 @@
 
             margin-bottom:
                 10px;
+
+            min-height:
+                22px;
+
+            word-break: break-word;
         }
 
 
         /* =========================
            CARD BUTTONS
+           VERTICAL
         ========================= */
 
         .product-actions {
 
-            display: grid;
+            display: flex;
 
-            grid-template-columns:
-                1fr 1fr;
+            flex-direction: column;
 
-            gap: 7px;
+            gap: 8px;
+
+            width: 100%;
+
+            margin-top: auto;
         }
 
 
         .product-button {
+
+            width: 100%;
+
+            min-height: 42px;
 
             border: 0;
 
             border-radius: 10px;
 
             padding:
-                9px 5px;
+                9px 8px;
 
             background:
                 var(--surface-2);
@@ -243,19 +314,29 @@
             font-family:
                 inherit;
 
-            font-size: 10px;
+            font-size: 11px;
+
+            line-height: 1.5;
 
             cursor: pointer;
 
             transition:
-                .2s ease;
+                transform .2s ease,
+                background .2s ease,
+                border-color .2s ease;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
         }
 
 
         .product-button:active {
 
             transform:
-                scale(.95);
+                scale(.97);
         }
 
 
@@ -303,7 +384,15 @@
 
             justify-content: center;
 
-            padding: 12px;
+            padding:
+                max(12px, env(safe-area-inset-top))
+                max(12px, env(safe-area-inset-right))
+                max(12px, env(safe-area-inset-bottom))
+                max(12px, env(safe-area-inset-left));
+
+            overflow-y: auto;
+
+            overscroll-behavior: contain;
         }
 
 
@@ -323,7 +412,8 @@
 
             max-width: 500px;
 
-            max-height: 94vh;
+            max-height:
+                calc(100vh - 24px);
 
             border-radius: 24px;
 
@@ -337,6 +427,8 @@
 
             box-shadow:
                 0 30px 100px rgba(0,0,0,.7);
+
+            flex-shrink: 0;
         }
 
 
@@ -346,6 +438,8 @@
 
             background:
                 #050506;
+
+            overflow: hidden;
         }
 
 
@@ -354,6 +448,9 @@
             width: 100%;
 
             aspect-ratio: 3 / 4;
+
+            max-height:
+                76vh;
 
             object-fit: cover;
 
@@ -390,9 +487,17 @@
 
             font-size: 22px;
 
+            line-height: 1;
+
             z-index: 5;
 
             cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
         }
 
 
@@ -426,7 +531,15 @@
 
             font-size: 22px;
 
+            line-height: 1;
+
             cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
         }
 
 
@@ -470,6 +583,8 @@
                 var(--accent);
 
             font-size: 11px;
+
+            white-space: nowrap;
         }
 
 
@@ -480,7 +595,7 @@
         .gallery-footer {
 
             padding:
-                16px;
+                14px 16px 16px;
         }
 
 
@@ -492,6 +607,10 @@
 
             color:
                 var(--text);
+
+            line-height: 1.6;
+
+            word-break: break-word;
         }
 
 
@@ -503,6 +622,10 @@
                 var(--muted);
 
             font-size: 12px;
+
+            line-height: 1.8;
+
+            word-break: break-word;
         }
 
 
@@ -514,11 +637,16 @@
 
             width: 100%;
 
-            max-width: 500px;
+            max-width: 560px;
 
-            max-height: 92vh;
+            max-height:
+                calc(100vh - 24px);
 
             overflow-y: auto;
+
+            overscroll-behavior: contain;
+
+            -webkit-overflow-scrolling: touch;
 
             border-radius: 24px;
 
@@ -532,6 +660,8 @@
                 0 30px 100px rgba(0,0,0,.7);
 
             position: relative;
+
+            flex-shrink: 0;
         }
 
 
@@ -548,6 +678,8 @@
                 1px solid var(--border);
 
             position: relative;
+
+            padding-left: 65px;
         }
 
 
@@ -570,12 +702,16 @@
 
             margin: 0;
 
-            font-size: 21px;
+            font-size: clamp(18px, 4vw, 22px);
 
             font-weight: 800;
 
             color:
                 var(--text);
+
+            line-height: 1.5;
+
+            word-break: break-word;
         }
 
 
@@ -589,6 +725,8 @@
             font-size: 12px;
 
             line-height: 1.8;
+
+            word-break: break-word;
         }
 
 
@@ -608,7 +746,8 @@
             display: grid;
 
             grid-template-columns:
-                105px 1fr;
+                minmax(90px, 105px)
+                minmax(0, 1fr);
 
             gap: 12px;
 
@@ -620,6 +759,9 @@
 
             line-height:
                 1.8;
+
+            align-items:
+                start;
         }
 
 
@@ -636,6 +778,9 @@
                 var(--muted);
 
             font-size: 12px;
+
+            word-break:
+                break-word;
         }
 
 
@@ -648,6 +793,11 @@
 
             font-weight:
                 600;
+
+            word-break:
+                break-word;
+
+            min-width: 0;
         }
 
 
@@ -663,13 +813,17 @@
             display: grid;
 
             grid-template-columns:
-                1fr 1fr;
+                repeat(2, minmax(0, 1fr));
 
             gap: 10px;
         }
 
 
         .details-action {
+
+            min-width: 0;
+
+            min-height: 46px;
 
             padding:
                 13px 8px;
@@ -692,6 +846,9 @@
             font-weight:
                 bold;
 
+            line-height:
+                1.5;
+
             color:
                 var(--text);
 
@@ -700,6 +857,15 @@
 
             border:
                 1px solid var(--border);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
         }
 
 
@@ -720,32 +886,246 @@
 
 
         /* =========================
-           MOBILE
+           TABLET
         ========================= */
 
-        @media(max-width:340px) {
+        @media (min-width: 600px) {
+
+            .products {
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
+                gap: 16px;
+
+                padding:
+                    20px;
+            }
+
+
+            .product-info {
+
+                padding:
+                    14px;
+            }
+
+
+            .product-name {
+
+                font-size: 14px;
+            }
+
+
+            .product-button {
+
+                font-size: 11px;
+
+                min-height: 44px;
+            }
+
+        }
+
+
+        /* =========================
+           DESKTOP
+        ========================= */
+
+        @media (min-width: 900px) {
+
+            .header {
+
+                padding-left:
+                    30px;
+
+                padding-right:
+                    30px;
+            }
+
+
+            .products {
+
+                grid-template-columns:
+                    repeat(4, minmax(0, 1fr));
+
+                gap: 18px;
+
+                padding:
+                    24px;
+            }
+
+
+            .product {
+
+                border-radius:
+                    20px;
+            }
+
+
+            .product-button:hover {
+
+                border-color:
+                    var(--accent);
+            }
+
+
+            .details-modal {
+
+                max-width:
+                    600px;
+            }
+
+
+            .gallery-modal {
+
+                max-width:
+                    520px;
+            }
+
+        }
+
+
+        /* =========================
+           LARGE DESKTOP
+        ========================= */
+
+        @media (min-width: 1300px) {
+
+            .products {
+
+                grid-template-columns:
+                    repeat(5, minmax(0, 1fr));
+
+                gap: 20px;
+
+                padding:
+                    28px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL PHONES
+        ========================= */
+
+        @media (max-width: 360px) {
 
             .products {
 
                 grid-template-columns:
                     1fr;
+
+                padding:
+                    12px;
+
+                gap:
+                    12px;
+            }
+
+
+            .product-image {
+
+                aspect-ratio:
+                    4 / 5;
+            }
+
+
+            .product-info {
+
+                padding:
+                    11px 12px 13px;
+            }
+
+
+            .product-button {
+
+                min-height:
+                    40px;
+
+                font-size:
+                    11px;
             }
 
 
             .detail-row {
 
                 grid-template-columns:
-                    90px 1fr;
+                    85px
+                    minmax(0, 1fr);
 
-                gap: 8px;
+                gap:
+                    8px;
+            }
+
+
+            .details-header {
+
+                padding:
+                    20px 16px 16px;
+
+                padding-left:
+                    55px;
+            }
+
+
+            .details-list {
+
+                padding:
+                    6px 16px 16px;
+            }
+
+
+            .details-actions {
+
+                padding:
+                    0 16px 16px;
+
+                gap:
+                    8px;
             }
 
         }
 
+
+        /* =========================
+           SHORT DESKTOP WINDOWS
+        ========================= */
+
+        @media (min-width: 700px) and (max-height: 650px) {
+
+            .overlay {
+
+                align-items:
+                    flex-start;
+
+                padding-top:
+                    12px;
+
+                padding-bottom:
+                    12px;
+            }
+
+
+            .gallery-modal,
+            .details-modal {
+
+                max-height:
+                    calc(100vh - 24px);
+            }
+
+
+            .gallery img {
+
+                max-height:
+                    60vh;
+            }
+
+        }
+
+
     </style>
 
 </head>
-
 
 
 <body>
@@ -1647,6 +2027,7 @@
                         class="product-image"
                         src="${product.images[0]}"
                         alt="${product.name}"
+                        loading="lazy"
                         onclick="openGallery(${index})">
 
 
@@ -1664,6 +2045,7 @@
 
 
                             <button
+                                type="button"
                                 class="product-button gallery-button"
                                 onclick="openGallery(${index})">
 
@@ -1673,6 +2055,7 @@
 
 
                             <button
+                                type="button"
                                 class="product-button details-button"
                                 onclick="openDetails(${index})">
 
@@ -1967,6 +2350,65 @@
                 ) {
 
                     closeDetails();
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           ESC KEY - DESKTOP
+        ========================= */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    if (
+                        galleryOverlay.classList.contains("active")
+                    ) {
+
+                        closeGallery();
+
+                    }
+
+
+                    if (
+                        detailsOverlay.classList.contains("active")
+                    ) {
+
+                        closeDetails();
+
+                    }
+
+                }
+
+
+                if (
+                    galleryOverlay.classList.contains("active")
+                ) {
+
+                    if (
+                        event.key === "ArrowRight"
+                    ) {
+
+                        nextImage();
+
+                    }
+
+
+                    if (
+                        event.key === "ArrowLeft"
+                    ) {
+
+                        previousImage();
+
+                    }
 
                 }
 
