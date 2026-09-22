@@ -1,197 +1,867 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-  <title>ارتباط با ما</title>
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>ویترین فروشگاه</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Tahoma, Arial, sans-serif;
-      background:
-        radial-gradient(circle at 20% 10%, #374151 0%, transparent 35%),
-        linear-gradient(145deg, #0f172a, #1f2937);
-      color: white;
+    <style>
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-      padding: 20px;
-    }
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
 
-    .app {
-      width: 100%;
-      max-width: 430px;
+            background:
+                var(--tg-theme-bg-color, #101114);
 
-      padding: 30px 20px 20px;
+            color:
+                var(--tg-theme-text-color, #ffffff);
 
-      border-radius: 28px;
+            min-height: 100vh;
+        }
 
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
 
-      backdrop-filter: blur(20px);
+        /* =========================
+           HEADER
+        ========================= */
 
-      box-shadow:
-        0 25px 70px rgba(0,0,0,.45);
-    }
+        .header {
+            padding: 22px 18px 16px;
 
-    .logo {
-      text-align: center;
-      font-size: 44px;
-      margin-bottom: 5px;
-    }
+            position: sticky;
+            top: 0;
 
-    h1 {
-      text-align: center;
-      font-size: 22px;
-      margin: 0 0 8px;
-    }
+            z-index: 10;
 
-    .subtitle {
-      text-align: center;
-      color: #cbd5e1;
-      font-size: 13px;
-      margin-bottom: 25px;
-    }
+            background:
+                color-mix(
+                    in srgb,
+                    var(--tg-theme-bg-color, #101114) 88%,
+                    transparent
+                );
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+            backdrop-filter: blur(18px);
 
-    a {
-      min-height: 70px;
+            border-bottom:
+                1px solid
+                var(--tg-theme-hint-color, #777);
+        }
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
 
-      text-align: center;
+            text-align: center;
+        }
 
-      color: white;
-      text-decoration: none;
+        .subtitle {
+            margin-top: 6px;
 
-      border-radius: 18px;
+            text-align: center;
 
-      background: rgba(255,255,255,.10);
+            font-size: 12px;
 
-      border: 1px solid rgba(255,255,255,.12);
+            color:
+                var(--tg-theme-hint-color, #a0a0a0);
+        }
 
-      font-size: 14px;
-      font-weight: bold;
 
-      transition: .15s;
-    }
+        /* =========================
+           PRODUCTS
+        ========================= */
 
-    a:active {
-      transform: scale(.96);
-    }
+        .products {
 
-    .map {
-      grid-column: 1 / -1;
+            padding: 16px;
 
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #ec4899
-        );
-    }
+            display: grid;
 
-    .close {
-      width: 100%;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
 
-      margin-top: 14px;
-      padding: 13px;
+            gap: 13px;
+        }
 
-      border: none;
-      border-radius: 15px;
 
-      background: rgba(255,255,255,.07);
+        .product {
 
-      color: #cbd5e1;
+            overflow: hidden;
 
-      font-size: 13px;
-    }
-  </style>
+            border-radius: 20px;
+
+            background:
+                var(--tg-theme-secondary-bg-color, #1b1c20);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            cursor: pointer;
+
+            transition:
+                transform .18s ease,
+                box-shadow .18s ease;
+        }
+
+        .product:active {
+
+            transform: scale(.96);
+        }
+
+
+        .product-image {
+
+            width: 100%;
+
+            aspect-ratio: 3 / 4;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .product-info {
+
+            padding: 11px 12px 14px;
+        }
+
+
+        .product-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            line-height: 1.7;
+        }
+
+
+        .view {
+
+            margin-top: 4px;
+
+            font-size: 11px;
+
+            color:
+                var(--tg-theme-link-color, #5ea7ff);
+        }
+
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 100;
+
+            background:
+                rgba(0,0,0,.82);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 14px;
+        }
+
+
+        .modal.active {
+
+            display: flex;
+        }
+
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            max-height: 94vh;
+
+            overflow-y: auto;
+
+            border-radius: 25px;
+
+            background:
+                var(--tg-theme-bg-color, #101114);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.5);
+
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           GALLERY
+        ========================= */
+
+        .gallery {
+
+            position: relative;
+
+            background: #080808;
+        }
+
+
+        .gallery img {
+
+            width: 100%;
+
+            aspect-ratio: 3 / 4;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .close {
+
+            position: absolute;
+
+            top: 12px;
+
+            right: 12px;
+
+            width: 38px;
+
+            height: 38px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,0,0,.6);
+
+            color: white;
+
+            font-size: 22px;
+
+            z-index: 5;
+        }
+
+
+        .arrow {
+
+            position: absolute;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 42px;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,0,0,.55);
+
+            color: white;
+
+            font-size: 22px;
+        }
+
+
+        .arrow-right {
+
+            right: 10px;
+        }
+
+
+        .arrow-left {
+
+            left: 10px;
+        }
+
+
+        .counter {
+
+            position: absolute;
+
+            bottom: 12px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(0,0,0,.55);
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details {
+
+            padding: 18px;
+        }
+
+
+        .details h2 {
+
+            margin: 0;
+
+            font-size: 20px;
+        }
+
+
+        .details p {
+
+            margin:
+                8px 0 18px;
+
+            color:
+                var(--tg-theme-hint-color, #aaa);
+
+            font-size: 13px;
+
+            line-height: 1.9;
+        }
+
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+
+        .action {
+
+            padding: 13px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: white;
+
+            background:
+                var(--tg-theme-secondary-bg-color, #222);
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .action-map {
+
+            grid-column: 1 / -1;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b5cf6,
+                    #ec4899
+                );
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:340px) {
+
+            .products {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-  <main class="app">
 
-    <div class="logo">✦</div>
+<!-- =========================
+     HEADER
+========================= -->
 
-    <h1>با ما در ارتباط باشید</h1>
+<header class="header">
+
+    <div class="brand">
+        ✦ ویترین فروشگاه
+    </div>
 
     <div class="subtitle">
-      مشاوره، سفارش و دسترسی سریع به فروشگاه
+        جدیدترین محصولات
     </div>
 
-    <div class="buttons">
+</header>
 
-      <a href="https://t.me/ehsanfard_dev">
-        💬<br>
-        تلگرام
-      </a>
 
-      <a href="https://wa.me/989124107390">
-        📱<br>
-        واتساپ
-      </a>
 
-      <a href="https://rubika.ir/989124107390">
-        🟣<br>
-        روبیکا
-      </a>
+<!-- =========================
+     PRODUCTS
+========================= -->
 
-      <a
-        class="map"
-        href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d"
-      >
-        📍 مسیریابی تا فروشگاه →
-      </a>
+<main class="products" id="products"></main>
+
+
+
+<!-- =========================
+     PRODUCT MODAL
+========================= -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="gallery">
+
+            <button
+                class="close"
+                onclick="closeProduct()">
+                ×
+            </button>
+
+
+            <img
+                id="galleryImage"
+                src=""
+                alt="">
+
+
+            <button
+                class="arrow arrow-right"
+                onclick="nextImage()">
+                ›
+            </button>
+
+
+            <button
+                class="arrow arrow-left"
+                onclick="previousImage()">
+                ‹
+            </button>
+
+
+            <div
+                class="counter"
+                id="counter">
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+            <h2 id="productTitle"></h2>
+
+            <p id="productDescription"></p>
+
+
+            <div class="actions">
+
+                <a
+                    class="action"
+                    href="https://t.me/ehsanfard_dev">
+
+                    💬 مشاوره
+
+                </a>
+
+
+                <a
+                    class="action"
+                    href="https://wa.me/989124107390">
+
+                    📱 واتساپ
+
+                </a>
+
+
+                <a
+                    class="action action-map"
+                    href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d">
+
+                    📍 مسیریابی تا فروشگاه →
+
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <button class="close" onclick="closeApp()">
-      بستن
-    </button>
+</div>
 
-  </main>
 
-  <script>
+
+<script>
+
+    /* =========================
+       TELEGRAM
+    ========================= */
 
     const tg = window.Telegram?.WebApp;
 
     if (tg) {
-      tg.ready();
-      tg.expand();
-    }
 
-    function closeApp() {
+        tg.ready();
 
-      if (tg) {
-        tg.close();
-      } else {
-        history.back();
-      }
+        tg.expand();
 
     }
 
-  </script>
+
+
+    /* =========================
+       PRODUCTS DATA
+    ========================= */
+
+    const products = [
+
+        {
+            name: "سویشرت باکسی اورسایز",
+            description: "مدل جدید با استایل آزاد و مدرن.",
+            images: [
+                "https://picsum.photos/700/900?random=1",
+                "https://picsum.photos/700/900?random=11",
+                "https://picsum.photos/700/900?random=21"
+            ]
+        },
+
+        {
+            name: "ست پاییزی دخترانه",
+            description: "استایل پاییزی با طراحی مدرن.",
+            images: [
+                "https://picsum.photos/700/900?random=2",
+                "https://picsum.photos/700/900?random=12",
+                "https://picsum.photos/700/900?random=22"
+            ]
+        },
+
+        {
+            name: "هودی اورسایز",
+            description: "طراحی راحت و مناسب استایل روزمره.",
+            images: [
+                "https://picsum.photos/700/900?random=3",
+                "https://picsum.photos/700/900?random=13",
+                "https://picsum.photos/700/900?random=23"
+            ]
+        },
+
+        {
+            name: "ست اسپرت پسرانه",
+            description: "استایل اسپرت مناسب نوجوانان.",
+            images: [
+                "https://picsum.photos/700/900?random=4",
+                "https://picsum.photos/700/900?random=14",
+                "https://picsum.photos/700/900?random=24"
+            ]
+        },
+
+        {
+            name: "دامن بافت",
+            description: "بافت ظریف با استایل پاییزی.",
+            images: [
+                "https://picsum.photos/700/900?random=5",
+                "https://picsum.photos/700/900?random=15",
+                "https://picsum.photos/700/900?random=25"
+            ]
+        },
+
+        {
+            name: "شلوار بگی",
+            description: "فرم آزاد و ترند برای استایل خیابانی.",
+            images: [
+                "https://picsum.photos/700/900?random=6",
+                "https://picsum.photos/700/900?random=16",
+                "https://picsum.photos/700/900?random=26"
+            ]
+        },
+
+        {
+            name: "تیشرت باکسی",
+            description: "مدل مینیمال با فرم آزاد.",
+            images: [
+                "https://picsum.photos/700/900?random=7",
+                "https://picsum.photos/700/900?random=17",
+                "https://picsum.photos/700/900?random=27"
+            ]
+        },
+
+        {
+            name: "کت پاییزی",
+            description: "استایل شیک مناسب فصل پاییز.",
+            images: [
+                "https://picsum.photos/700/900?random=8",
+                "https://picsum.photos/700/900?random=18",
+                "https://picsum.photos/700/900?random=28"
+            ]
+        },
+
+        {
+            name: "بافت دخترانه",
+            description: "طراحی ظریف و مناسب استایل روزمره.",
+            images: [
+                "https://picsum.photos/700/900?random=9",
+                "https://picsum.photos/700/900?random=19",
+                "https://picsum.photos/700/900?random=29"
+            ]
+        },
+
+        {
+            name: "ست راحتی",
+            description: "استایل راحت و مدرن برای استفاده روزمره.",
+            images: [
+                "https://picsum.photos/700/900?random=10",
+                "https://picsum.photos/700/900?random=20",
+                "https://picsum.photos/700/900?random=30"
+            ]
+        }
+
+    ];
+
+
+
+    /* =========================
+       RENDER PRODUCTS
+    ========================= */
+
+    const productsContainer =
+        document.getElementById("products");
+
+
+    products.forEach((product, index) => {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "product";
+
+
+        card.innerHTML = `
+
+            <img
+                class="product-image"
+                src="${product.images[0]}"
+                alt="${product.name}">
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    ${product.name}
+                </div>
+
+                <div class="view">
+                    مشاهده تصاویر ←
+                </div>
+
+            </div>
+
+        `;
+
+
+        card.onclick = () => {
+
+            openProduct(index);
+
+        };
+
+
+        productsContainer.appendChild(card);
+
+    });
+
+
+
+    /* =========================
+       GALLERY
+    ========================= */
+
+    let currentProduct = 0;
+
+    let currentImage = 0;
+
+
+    const modal =
+        document.getElementById("modal");
+
+    const galleryImage =
+        document.getElementById("galleryImage");
+
+    const productTitle =
+        document.getElementById("productTitle");
+
+    const productDescription =
+        document.getElementById("productDescription");
+
+    const counter =
+        document.getElementById("counter");
+
+
+
+    function openProduct(index) {
+
+        currentProduct = index;
+
+        currentImage = 0;
+
+        updateGallery();
+
+        modal.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+
+
+    function updateGallery() {
+
+        const product =
+            products[currentProduct];
+
+
+        galleryImage.src =
+            product.images[currentImage];
+
+
+        productTitle.textContent =
+            product.name;
+
+
+        productDescription.textContent =
+            product.description;
+
+
+        counter.textContent =
+            `${currentImage + 1} / ${product.images.length}`;
+
+    }
+
+
+
+    function nextImage() {
+
+        const product =
+            products[currentProduct];
+
+
+        currentImage++;
+
+
+        if (
+            currentImage >=
+            product.images.length
+        ) {
+
+            currentImage = 0;
+
+        }
+
+
+        updateGallery();
+
+    }
+
+
+
+    function previousImage() {
+
+        const product =
+            products[currentProduct];
+
+
+        currentImage--;
+
+
+        if (currentImage < 0) {
+
+            currentImage =
+                product.images.length - 1;
+
+        }
+
+
+        updateGallery();
+
+    }
+
+
+
+    function closeProduct() {
+
+        modal.classList.remove("active");
+
+        document.body.style.overflow = "";
+
+    }
+
+
+
+    /* =========================
+       CLOSE BY BACKGROUND
+    ========================= */
+
+    modal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeProduct();
+
+            }
+
+        }
+    );
+
+
+</script>
 
 </body>
 </html>
