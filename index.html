@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ارتباط با ما</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, #374151 0%, transparent 35%),
+        linear-gradient(145deg, #0f172a, #1f2937);
+      color: white;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+
+      padding: 30px 20px 20px;
+
+      border-radius: 28px;
+
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+
+      backdrop-filter: blur(20px);
+
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 44px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    a {
+      min-height: 70px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      color: white;
+      text-decoration: none;
+
+      border-radius: 18px;
+
+      background: rgba(255,255,255,.10);
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      font-size: 14px;
+      font-weight: bold;
+
+      transition: .15s;
+    }
+
+    a:active {
+      transform: scale(.96);
+    }
+
+    .map {
+      grid-column: 1 / -1;
+
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #ec4899
+        );
+    }
+
+    .close {
+      width: 100%;
+
+      margin-top: 14px;
+      padding: 13px;
+
+      border: none;
+      border-radius: 15px;
+
+      background: rgba(255,255,255,.07);
+
+      color: #cbd5e1;
+
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <div class="logo">✦</div>
+
+    <h1>با ما در ارتباط باشید</h1>
+
+    <div class="subtitle">
+      مشاوره، سفارش و دسترسی سریع به فروشگاه
+    </div>
+
+    <div class="buttons">
+
+      <a href="https://t.me/ehsanfard_dev">
+        💬<br>
+        تلگرام
+      </a>
+
+      <a href="https://wa.me/989124107390">
+        📱<br>
+        واتساپ
+      </a>
+
+      <a href="https://rubika.ir/989124107390">
+        🟣<br>
+        روبیکا
+      </a>
+
+      <a
+        class="map"
+        href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d"
+      >
+        📍 مسیریابی تا فروشگاه →
+      </a>
+
+    </div>
+
+    <button class="close" onclick="closeApp()">
+      بستن
+    </button>
+
+  </main>
+
+  <script>
+
+    const tg = window.Telegram?.WebApp;
+
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    function closeApp() {
+
+      if (tg) {
+        tg.close();
+      } else {
+        history.back();
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
