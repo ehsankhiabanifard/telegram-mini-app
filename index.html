@@ -1,2342 +1,1247 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width,
-                   initial-scale=1.0,
-                   maximum-scale=1.0,
-                   user-scalable=no,
-                   viewport-fit=cover">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-    <title>ویترین فروشگاه</title>
+    <title>فروشگاه پوشاک</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-
     <style>
-
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
         }
 
+        :root {
+            --bg: #0B0B0D;
+            --surface: #151519;
+            --surface-2: #1C1C21;
+            --border: #292930;
+            --text: #F5F5F5;
+            --muted: #9999A3;
+            --accent: #C8A96B;
+            --accent-dark: #9F824C;
+            --danger: #D96C6C;
+        }
 
         html {
-            width: 100%;
-            min-height: 100%;
-            background: #0B0B0D;
+            background: var(--bg);
+            scroll-behavior: smooth;
         }
 
-
         body {
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(200, 169, 107, 0.07),
+                    transparent 35%
+                ),
+                var(--bg);
 
-            margin: 0;
-
-            width: 100%;
-            min-height: 100vh;
-
+            color: var(--text);
             font-family:
                 Tahoma,
                 Arial,
                 sans-serif;
 
-            background:
-                var(--bg);
-
-            color:
-                var(--text);
-
-            overflow-x: hidden;
-
-            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+            padding:
+                env(safe-area-inset-top)
+                env(safe-area-inset-right)
+                env(safe-area-inset-bottom)
+                env(safe-area-inset-left);
         }
 
-
         button,
-        a,
-        input,
-        textarea {
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
             font-family: inherit;
         }
 
-
-        /* =========================
-           DARK LUXURY THEME
-        ========================= */
-
-        :root {
-
-            --bg: #0B0B0D;
-
-            --surface: #151519;
-
-            --surface-2: #1C1C21;
-
-            --border: #292930;
-
-            --text: #F5F5F5;
-
-            --muted: #9999A3;
-
-            --accent: #C8A96B;
-
-            --accent-soft: rgba(200,169,107,.12);
-
-            --page-max: 1400px;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-
-        /* =========================
-           HEADER
-        ========================= */
+        /* Header */
 
         .header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
 
             width: 100%;
 
-            padding:
-                calc(20px + env(safe-area-inset-top))
-                18px
-                18px;
+            padding: 20px 16px 18px;
 
-            position: sticky;
+            background: rgba(11, 11, 13, 0.94);
+            border-bottom: 1px solid var(--border);
 
-            top: 0;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
 
-            z-index: 10;
-
-            background:
-                rgba(11,11,13,.90);
-
-            backdrop-filter:
-                blur(20px);
-
-            -webkit-backdrop-filter:
-                blur(20px);
-
-            border-bottom:
-                1px solid var(--border);
+            text-align: center;
         }
 
-
-        .brand {
-
-            font-size: clamp(20px, 3vw, 26px);
-
+        .header-title {
+            color: var(--accent);
+            font-size: 24px;
             font-weight: 800;
-
-            letter-spacing: -.5px;
-
-            text-align: center;
-
-            color:
-                var(--text);
-
-            line-height: 1.5;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
 
-
-        .subtitle {
-
-            margin-top: 5px;
-
-            text-align: center;
-
+        .header-subtitle {
+            color: var(--muted);
             font-size: 12px;
-
-            color:
-                var(--muted);
-
-            line-height: 1.7;
+            line-height: 1.9;
         }
 
-
-        /* =========================
-           PRODUCTS WRAPPER
-        ========================= */
+        /* Products */
 
         .products {
-
             width: 100%;
+            max-width: 1400px;
 
-            max-width:
-                var(--page-max);
-
-            margin:
-                0 auto;
-
-            padding:
-                16px;
+            margin: 0 auto;
+            padding: 18px;
 
             display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
         }
 
-
-        /* =========================
-           PRODUCT CARD
-        ========================= */
-
         .product {
-
             min-width: 0;
-
             overflow: hidden;
 
-            border-radius: 18px;
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            transition:
-                transform .2s ease,
-                border-color .2s ease;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
 
             display: flex;
-
             flex-direction: column;
-        }
 
+            transition:
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
 
         .product:active {
-
-            transform:
-                scale(.985);
-
-            border-color:
-                var(--accent);
+            transform: scale(0.99);
         }
 
-
         .product-image {
-
             width: 100%;
-
             aspect-ratio: 3 / 4;
 
             object-fit: cover;
-
             display: block;
 
-            cursor: pointer;
-
-            background:
-                #101014;
+            background: var(--surface-2);
         }
-
 
         .product-info {
-
-            padding:
-                12px 13px 14px;
+            padding: 12px;
 
             display: flex;
-
-            flex-direction: column;
-
             flex: 1;
+            flex-direction: column;
         }
-
 
         .product-name {
-
-            font-size: 13px;
-
+            color: var(--text);
+            font-size: 14px;
             font-weight: 700;
+            line-height: 1.8;
 
-            line-height: 1.7;
+            margin-bottom: 10px;
 
-            color:
-                var(--text);
-
-            margin-bottom:
-                10px;
-
-            min-height:
-                22px;
-
-            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
+        .product-description {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.9;
 
-        /* =========================
-           CARD BUTTONS
-           VERTICAL
-        ========================= */
+            margin-bottom: 14px;
+        }
 
         .product-actions {
-
             display: flex;
-
             flex-direction: column;
-
             gap: 8px;
-
-            width: 100%;
 
             margin-top: auto;
         }
 
-
         .product-button {
-
             width: 100%;
-
             min-height: 42px;
 
-            border: 0;
+            padding: 9px 8px;
 
-            border-radius: 10px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
 
-            padding:
-                9px 8px;
-
-            background:
-                var(--surface-2);
-
-            border:
-                1px solid var(--border);
-
-            color:
-                var(--text);
-
-            font-family:
-                inherit;
+            background: var(--surface-2);
+            color: var(--text);
 
             font-size: 11px;
-
-            line-height: 1.5;
+            font-weight: 700;
 
             cursor: pointer;
+
+            white-space: nowrap;
 
             transition:
-                transform .2s ease,
-                background .2s ease,
-                border-color .2s ease;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
         }
 
+        .product-button.gallery-button {
+            color: var(--accent);
+            border-color: rgba(200, 169, 107, 0.4);
+        }
+
+        .product-button.details-button {
+            background: var(--accent);
+            color: #151515;
+            border-color: var(--accent);
+        }
 
         .product-button:active {
-
-            transform:
-                scale(.97);
+            transform: scale(0.98);
         }
 
-
-        .gallery-button {
-
-            color:
-                var(--accent);
-        }
-
-
-        .details-button {
-
-            background:
-                var(--accent);
-
-            color:
-                #111;
-
-            border-color:
-                var(--accent);
-
-            font-weight:
-                bold;
-        }
-
-
-        /* =========================
-           OVERLAY
-        ========================= */
+        /* Overlay */
 
         .overlay {
-
             position: fixed;
-
             inset: 0;
-
             z-index: 100;
 
-            background:
-                rgba(0,0,0,.88);
-
             display: none;
-
             align-items: center;
-
             justify-content: center;
 
             padding:
-                max(12px, env(safe-area-inset-top))
-                max(12px, env(safe-area-inset-right))
-                max(12px, env(safe-area-inset-bottom))
-                max(12px, env(safe-area-inset-left));
+                20px
+                max(20px, env(safe-area-inset-right))
+                20px
+                max(20px, env(safe-area-inset-left));
 
-            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.82);
 
-            overscroll-behavior: contain;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
-
 
         .overlay.active {
-
             display: flex;
         }
 
-
-        /* =========================
-           GALLERY MODAL
-        ========================= */
+        /* Gallery */
 
         .gallery-modal {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            max-height:
-                calc(100vh - 24px);
-
-            border-radius: 24px;
-
-            overflow: hidden;
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            box-shadow:
-                0 30px 100px rgba(0,0,0,.7);
-
-            flex-shrink: 0;
-        }
-
-
-        .gallery {
-
             position: relative;
 
-            background:
-                #050506;
+            width: 100%;
+            max-width: 520px;
+            max-height: 94vh;
+
+            overflow: hidden;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            padding: 14px 16px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.7;
+        }
+
+        .close-button {
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border: 1px solid var(--border);
+            border-radius: 50%;
+
+            background: var(--surface-2);
+            color: var(--text);
+
+            font-size: 20px;
+            line-height: 1;
+
+            cursor: pointer;
+        }
+
+        .gallery-content {
+            position: relative;
+            padding: 12px;
 
             overflow: hidden;
         }
 
-
-        .gallery img {
+        .gallery-image {
+            display: block;
 
             width: 100%;
+            max-height: 65vh;
 
-            aspect-ratio: 3 / 4;
+            object-fit: contain;
 
-            max-height:
-                76vh;
-
-            object-fit: cover;
-
-            display: block;
+            border-radius: 10px;
+            background: #101014;
         }
 
-
-        /* =========================
-           CLOSE BUTTON
-        ========================= */
-
-        .close {
-
+        .gallery-arrow {
             position: absolute;
-
-            top: 12px;
-
-            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
 
             width: 38px;
-
             height: 38px;
 
-            border:
-                1px solid rgba(255,255,255,.15);
-
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
 
-            background:
-                rgba(0,0,0,.65);
+            background: rgba(0, 0, 0, 0.65);
+            color: white;
 
-            color:
-                white;
-
-            font-size: 22px;
-
-            line-height: 1;
-
-            z-index: 5;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-        }
-
-
-        /* =========================
-           GALLERY ARROWS
-        ========================= */
-
-        .arrow {
-
-            position: absolute;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            width: 42px;
-
-            height: 42px;
-
-            border:
-                1px solid rgba(255,255,255,.12);
-
-            border-radius: 50%;
-
-            background:
-                rgba(0,0,0,.65);
-
-            color:
-                white;
-
-            font-size: 22px;
-
+            font-size: 24px;
             line-height: 1;
 
             cursor: pointer;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
         }
 
-
-        .arrow-right {
-
-            right: 10px;
+        .gallery-arrow.previous {
+            right: 22px;
         }
 
-
-        .arrow-left {
-
-            left: 10px;
+        .gallery-arrow.next {
+            left: 22px;
         }
-
-
-        /* =========================
-           IMAGE COUNTER
-        ========================= */
-
-        .counter {
-
-            position: absolute;
-
-            bottom: 12px;
-
-            left: 50%;
-
-            transform:
-                translateX(-50%);
-
-            padding:
-                5px 11px;
-
-            border-radius:
-                20px;
-
-            background:
-                rgba(0,0,0,.7);
-
-            color:
-                var(--accent);
-
-            font-size: 11px;
-
-            white-space: nowrap;
-        }
-
-
-        /* =========================
-           GALLERY FOOTER
-        ========================= */
 
         .gallery-footer {
+            padding: 10px 16px 15px;
 
-            padding:
-                14px 16px 16px;
+            border-top: 1px solid var(--border);
+
+            text-align: center;
         }
 
-
-        .gallery-title {
-
-            font-size: 17px;
-
-            font-weight: bold;
-
-            color:
-                var(--text);
-
-            line-height: 1.6;
-
-            word-break: break-word;
+        .gallery-counter {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 8px;
         }
-
 
         .gallery-description {
-
-            margin-top: 5px;
-
-            color:
-                var(--muted);
-
-            font-size: 12px;
-
-            line-height: 1.8;
-
-            word-break: break-word;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.9;
         }
 
-
-        /* =========================
-           DETAILS MODAL
-        ========================= */
+        /* Details */
 
         .details-modal {
-
             width: 100%;
-
-            max-width: 560px;
-
-            max-height:
-                calc(100vh - 24px);
+            max-width: 540px;
+            max-height: 92vh;
 
             overflow-y: auto;
 
-            overscroll-behavior: contain;
-
-            -webkit-overflow-scrolling: touch;
-
-            border-radius: 24px;
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            box-shadow:
-                0 30px 100px rgba(0,0,0,.7);
-
-            position: relative;
-
-            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
         }
 
-
-        /* =========================
-           DETAILS HEADER
-        ========================= */
-
-        .details-header {
-
-            padding:
-                22px 20px 18px;
-
-            border-bottom:
-                1px solid var(--border);
-
-            position: relative;
-
-            padding-left: 65px;
+        .details-content {
+            padding: 16px;
         }
 
+        .details-description {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 2;
 
-        .details-label {
-
-            font-size: 10px;
-
-            color:
-                var(--accent);
-
-            margin-bottom:
-                7px;
-
-            letter-spacing:
-                .5px;
+            margin-bottom: 16px;
         }
 
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
 
-        .details-title {
+            margin-bottom: 18px;
 
-            margin: 0;
-
-            font-size: clamp(18px, 4vw, 22px);
-
-            font-weight: 800;
-
-            color:
-                var(--text);
-
-            line-height: 1.5;
-
-            word-break: break-word;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
         }
 
+        .details-table tr {
+            border-bottom: 1px solid var(--border);
+        }
 
-        .details-subtitle {
+        .details-table tr:last-child {
+            border-bottom: none;
+        }
 
-            margin-top: 7px;
-
-            color:
-                var(--muted);
+        .details-table td {
+            padding: 12px 10px;
 
             font-size: 12px;
-
             line-height: 1.8;
 
-            word-break: break-word;
+            vertical-align: top;
         }
 
+        .details-table td:first-child {
+            width: 38%;
 
-        /* =========================
-           DETAILS LIST
-        ========================= */
+            color: var(--accent);
+            font-weight: 700;
 
-        .details-list {
-
-            padding:
-                8px 20px 18px;
+            background: rgba(200, 169, 107, 0.05);
         }
 
+        .details-table td:last-child {
+            color: var(--text);
+        }
 
-        .detail-row {
+        .contact-title {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 800;
 
+            margin-bottom: 10px;
+        }
+
+        .contact-buttons {
             display: grid;
-
-            grid-template-columns:
-                minmax(90px, 105px)
-                minmax(0, 1fr);
-
-            gap: 12px;
-
-            padding:
-                13px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,.06);
-
-            line-height:
-                1.8;
-
-            align-items:
-                start;
+            grid-template-columns: 1fr;
+            gap: 9px;
         }
 
+        .contact-button {
+            width: 100%;
+            min-height: 44px;
 
-        .detail-row:last-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            border-bottom:
-                none;
-        }
+            border: 1px solid var(--border);
+            border-radius: 9px;
 
-
-        .detail-key {
-
-            color:
-                var(--muted);
+            background: var(--surface-2);
+            color: var(--text);
 
             font-size: 12px;
+            font-weight: 700;
 
-            word-break:
-                break-word;
+            cursor: pointer;
         }
 
-
-        .detail-value {
-
-            color:
-                var(--text);
-
-            font-size: 13px;
-
-            font-weight:
-                600;
-
-            word-break:
-                break-word;
-
-            min-width: 0;
+        .contact-button.telegram {
+            color: #65B8E8;
+            border-color: rgba(101, 184, 232, 0.35);
         }
 
-
-        /* =========================
-           DETAILS ACTIONS
-        ========================= */
-
-        .details-actions {
-
-            padding:
-                0 20px 20px;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 10px;
+        .contact-button.whatsapp {
+            color: #65D68A;
+            border-color: rgba(101, 214, 138, 0.35);
         }
 
-
-        .details-action {
-
-            min-width: 0;
-
-            min-height: 46px;
-
-            padding:
-                13px 8px;
-
-            border-radius:
-                14px;
-
-            text-align:
-                center;
-
-            text-decoration:
-                none;
-
-            font-family:
-                inherit;
-
-            font-size:
-                12px;
-
-            font-weight:
-                bold;
-
-            line-height:
-                1.5;
-
-            color:
-                var(--text);
-
-            background:
-                var(--surface-2);
-
-            border:
-                1px solid var(--border);
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
+        .contact-button.location {
+            color: var(--accent);
+            border-color: rgba(200, 169, 107, 0.4);
         }
 
-
-        .details-action.map {
-
-            grid-column:
-                1 / -1;
-
-            background:
-                var(--accent);
-
-            color:
-                #111;
-
-            border-color:
-                var(--accent);
-        }
-
-
-        /* =========================
-           TABLET
-        ========================= */
+        /* Tablet */
 
         @media (min-width: 600px) {
-
             .products {
-
-                grid-template-columns:
-                    repeat(3, minmax(0, 1fr));
-
+                grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 16px;
-
-                padding:
-                    20px;
+                padding: 22px;
             }
-
 
             .product-info {
-
-                padding:
-                    14px;
+                padding: 14px;
             }
-
 
             .product-name {
-
-                font-size: 14px;
+                font-size: 15px;
             }
 
+            .product-description {
+                font-size: 12px;
+            }
 
             .product-button {
-
-                font-size: 11px;
-
-                min-height: 44px;
+                font-size: 12px;
             }
-
         }
 
-
-        /* =========================
-           DESKTOP
-        ========================= */
+        /* Desktop */
 
         @media (min-width: 900px) {
-
-            .header {
-
-                padding-left:
-                    30px;
-
-                padding-right:
-                    30px;
-            }
-
-
             .products {
-
-                grid-template-columns:
-                    repeat(4, minmax(0, 1fr));
-
+                grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 18px;
-
-                padding:
-                    24px;
+                padding: 26px;
             }
 
-
-            .product {
-
-                border-radius:
-                    20px;
+            .product:hover {
+                border-color: var(--accent-dark);
             }
-
 
             .product-button:hover {
-
-                border-color:
-                    var(--accent);
+                border-color: var(--accent);
             }
 
-
-            .details-modal {
-
-                max-width:
-                    600px;
+            .product-button.details-button:hover {
+                background: #D7BA7B;
             }
 
-
-            .gallery-modal {
-
-                max-width:
-                    520px;
+            .product-button.gallery-button:hover {
+                background: rgba(200, 169, 107, 0.1);
             }
-
         }
 
-
-        /* =========================
-           LARGE DESKTOP
-        ========================= */
+        /* Large desktop */
 
         @media (min-width: 1300px) {
-
             .products {
-
-                grid-template-columns:
-                    repeat(5, minmax(0, 1fr));
-
+                grid-template-columns: repeat(5, minmax(0, 1fr));
                 gap: 20px;
-
-                padding:
-                    28px;
+                padding: 30px;
             }
-
         }
 
+        /* Very narrow phones:
+           همچنان حداقل دو ستون حفظ می‌شود */
 
+        @media (max-width: 360px) {
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 10px;
+                gap: 10px;
+            }
 
+            .product-image {
+                aspect-ratio: 3 / 4;
+            }
 
-        /* =========================
-           SHORT DESKTOP WINDOWS
-        ========================= */
+            .product-info {
+                padding: 10px;
+            }
+
+            .product-name {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .product-description {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .product-button {
+                min-height: 40px;
+                padding: 8px 4px;
+                font-size: 10px;
+            }
+        }
+
+        /* Short desktop windows */
 
         @media (min-width: 700px) and (max-height: 650px) {
-
-            .overlay {
-
-                align-items:
-                    flex-start;
-
-                padding-top:
-                    12px;
-
-                padding-bottom:
-                    12px;
+            .gallery-image {
+                max-height: 52vh;
             }
 
+            .gallery-modal {
+                max-height: 90vh;
+            }
 
-            .gallery-modal,
             .details-modal {
-
-                max-height:
-                    calc(100vh - 24px);
+                max-height: 88vh;
             }
-
-
-            .gallery img {
-
-                max-height:
-                    60vh;
-            }
-
         }
-
-
     </style>
-
 </head>
-
 
 <body>
 
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
     <header class="header">
+        <h1 class="header-title">فروشگاه پوشاک</h1>
 
-        <div class="brand">
-            ✦ ویترین فروشگاه
-        </div>
-
-        <div class="subtitle">
-            جدیدترین محصولات
-        </div>
-
+        <p class="header-subtitle">
+            مجموعه‌ای از جدیدترین مدل‌های پوشاک با کیفیت عالی
+        </p>
     </header>
 
+    <main class="products" id="products"></main>
 
-
-    <!-- =========================
-         PRODUCTS
-    ========================= -->
-
-    <main
-        class="products"
-        id="products">
-    </main>
-
-
-
-    <!-- =========================
-         GALLERY OVERLAY
-    ========================= -->
+    <!-- Gallery Modal -->
 
     <div
         class="overlay"
-        id="galleryOverlay">
-
+        id="galleryOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="گالری تصاویر محصول"
+    >
         <div class="gallery-modal">
 
-
-            <div class="gallery">
-
+            <div class="modal-header">
+                <h2 class="modal-title" id="galleryTitle">
+                    تصاویر محصول
+                </h2>
 
                 <button
-                    class="close"
-                    onclick="closeGallery()">
-
+                    class="close-button"
+                    type="button"
+                    onclick="closeGallery()"
+                    aria-label="بستن"
+                >
                     ×
-
                 </button>
+            </div>
 
+            <div class="gallery-content">
 
                 <img
                     id="galleryImage"
+                    class="gallery-image"
                     src=""
-                    alt="">
-
+                    alt="تصویر محصول"
+                >
 
                 <button
-                    class="arrow arrow-right"
-                    onclick="nextImage()">
-
+                    class="gallery-arrow previous"
+                    type="button"
+                    onclick="previousImage()"
+                    aria-label="تصویر قبلی"
+                >
                     ›
-
                 </button>
-
 
                 <button
-                    class="arrow arrow-left"
-                    onclick="previousImage()">
-
+                    class="gallery-arrow next"
+                    type="button"
+                    onclick="nextImage()"
+                    aria-label="تصویر بعدی"
+                >
                     ‹
-
                 </button>
-
-
-                <div
-                    class="counter"
-                    id="counter">
-                </div>
 
             </div>
 
-
             <div class="gallery-footer">
-
                 <div
-                    class="gallery-title"
-                    id="galleryTitle">
+                    class="gallery-counter"
+                    id="galleryCounter"
+                >
+                    1 / 1
                 </div>
 
                 <div
                     class="gallery-description"
-                    id="galleryDescription">
-                </div>
-
+                    id="galleryDescription"
+                ></div>
             </div>
 
         </div>
-
     </div>
 
-
-
-    <!-- =========================
-         DETAILS OVERLAY
-    ========================= -->
+    <!-- Details Modal -->
 
     <div
         class="overlay"
-        id="detailsOverlay">
-
+        id="detailsOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="جزئیات محصول"
+    >
         <div class="details-modal">
 
-
-            <button
-                class="close"
-                onclick="closeDetails()">
-
-                ×
-
-            </button>
-
-
-            <div class="details-header">
-
-                <div class="details-label">
-                    مشخصات محصول
-                </div>
-
+            <div class="modal-header">
                 <h2
-                    class="details-title"
-                    id="detailsTitle">
+                    class="modal-title"
+                    id="detailsTitle"
+                >
+                    جزئیات محصول
                 </h2>
 
-                <div
-                    class="details-subtitle"
-                    id="detailsSubtitle">
+                <button
+                    class="close-button"
+                    type="button"
+                    onclick="closeDetails()"
+                    aria-label="بستن"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="details-content">
+
+                <p
+                    class="details-description"
+                    id="detailsDescription"
+                ></p>
+
+                <table class="details-table">
+                    <tbody id="detailsTableBody"></tbody>
+                </table>
+
+                <div class="contact-title">
+                    برای ثبت سفارش و دریافت اطلاعات بیشتر:
                 </div>
 
-            </div>
+                <div class="contact-buttons">
 
+                    <a
+                        class="contact-button telegram"
+                        href="https://t.me/ehsanfard_dev"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ارتباط در تلگرام
+                    </a>
 
-            <div
-                class="details-list"
-                id="detailsList">
-            </div>
+                    <a
+                        class="contact-button whatsapp"
+                        href="https://wa.me/989124107390"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ارتباط در واتساپ
+                    </a>
 
+                    <a
+                        class="contact-button location"
+                        href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        مشاهده آدرس روی نقشه
+                    </a>
 
-            <div class="details-actions">
-
-
-                <a
-                    class="details-action"
-                    href="https://t.me/ehsanfard_dev">
-
-                    💬 مشاوره
-
-                </a>
-
-
-                <a
-                    class="details-action"
-                    href="https://wa.me/989124107390">
-
-                    📱 واتساپ
-
-                </a>
-
-
-                <a
-                    class="details-action map"
-                    href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d">
-
-                    📍 مسیریابی تا فروشگاه →
-
-                </a>
-
-
+                </div>
             </div>
 
         </div>
-
     </div>
 
-
-
     <script>
-
-
-        /* =========================
-           TELEGRAM WEB APP
-        ========================= */
-
-        const tg =
-            window.Telegram?.WebApp;
-
+        const tg = window.Telegram && window.Telegram.WebApp
+            ? window.Telegram.WebApp
+            : null;
 
         if (tg) {
-
             tg.ready();
-
             tg.expand();
-
         }
 
-
-
-        /* =========================
-           PRODUCTS DATA
-        ========================= */
+        /*
+         * اطلاعات محصولات
+         *
+         * محصول کد 100 بدون تغییر حفظ شده است.
+         */
 
         const products = [
-
-
-            /* =====================
-               PRODUCT 100
-            ===================== */
-
             {
+                id: 100,
 
                 name: "کد 100",
 
-                description:
-                    "باکسی اورسایز چاپ پیش و رو",
+                description: "باکسی اورسایز چاپ پیش و رو",
 
                 details: [
-
-                    [
-                        "مدل",
-                        "باکسی اورسایز چاپ پیش و رو"
-                    ],
-
-                    [
-                        "جنس",
-                        "دورس پنبه‌ای"
-                    ],
-
-                    [
-                        "سایز",
-                        "10 تا 14 سال"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "مشکی، کرم، طوسی"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ],
-
-                    [
-                        "نوع چاپ",
-                        "چاپ جلو و پشت"
-                    ]
-
+                    ["مدل", "باکسی اورسایز چاپ پیش و رو"],
+                    ["جنس", "دورس پنبه‌ای"],
+                    ["سایز", "10 تا 14 سال"],
+                    ["رنگ‌بندی", "مشکی، کرم، طوسی"],
+                    ["تعداد در جین", "12 عدد"],
+                    ["تعداد در کارتن", "24 عدد"],
+                    ["نوع چاپ", "چاپ جلو و پشت"]
                 ],
 
                 images: [
-
                     "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-0.png",
-
                     "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-1.png",
-
                     "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-2.png",
-
                     "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-3.png",
-
                     "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-4.png"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 2
-            ===================== */
-
             {
-
-                name: "محصول دوم",
-
-                description:
-                    "توضیحات محصول دوم",
-
+                id: 2,
+                name: "کد 2",
+                description: "محصول نمونه شماره 2",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول دوم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "پنبه‌ای"],
+                    ["سایز", "8 تا 12 سال"],
+                    ["رنگ‌بندی", "مشکی، سفید، طوسی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=2",
-
                     "https://picsum.photos/700/900?random=12",
-
                     "https://picsum.photos/700/900?random=22"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 3
-            ===================== */
-
             {
-
-                name: "محصول سوم",
-
-                description:
-                    "توضیحات محصول سوم",
-
+                id: 3,
+                name: "کد 3",
+                description: "محصول نمونه شماره 3",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول سوم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس"],
+                    ["سایز", "10 تا 14 سال"],
+                    ["رنگ‌بندی", "کرم، طوسی، مشکی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=3",
-
                     "https://picsum.photos/700/900?random=13",
-
                     "https://picsum.photos/700/900?random=23"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 4
-            ===================== */
-
             {
-
-                name: "محصول چهارم",
-
-                description:
-                    "توضیحات محصول چهارم",
-
+                id: 4,
+                name: "کد 4",
+                description: "محصول نمونه شماره 4",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول چهارم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس پنبه‌ای"],
+                    ["سایز", "8 تا 12 سال"],
+                    ["رنگ‌بندی", "طوسی، کرم"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=4",
-
                     "https://picsum.photos/700/900?random=14",
-
                     "https://picsum.photos/700/900?random=24"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 5
-            ===================== */
-
             {
-
-                name: "محصول پنجم",
-
-                description:
-                    "توضیحات محصول پنجم",
-
+                id: 5,
+                name: "کد 5",
+                description: "محصول نمونه شماره 5",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول پنجم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "پنبه‌ای"],
+                    ["سایز", "10 تا 14 سال"],
+                    ["رنگ‌بندی", "مشکی، کرم"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=5",
-
                     "https://picsum.photos/700/900?random=15",
-
                     "https://picsum.photos/700/900?random=25"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 6
-            ===================== */
-
             {
-
-                name: "محصول ششم",
-
-                description:
-                    "توضیحات محصول ششم",
-
+                id: 6,
+                name: "کد 6",
+                description: "محصول نمونه شماره 6",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول ششم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس"],
+                    ["سایز", "8 تا 12 سال"],
+                    ["رنگ‌بندی", "سفید، طوسی، مشکی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=6",
-
                     "https://picsum.photos/700/900?random=16",
-
                     "https://picsum.photos/700/900?random=26"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 7
-            ===================== */
-
             {
-
-                name: "محصول هفتم",
-
-                description:
-                    "توضیحات محصول هفتم",
-
+                id: 7,
+                name: "کد 7",
+                description: "محصول نمونه شماره 7",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول هفتم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس پنبه‌ای"],
+                    ["سایز", "10 تا 14 سال"],
+                    ["رنگ‌بندی", "کرم، مشکی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=7",
-
                     "https://picsum.photos/700/900?random=17",
-
                     "https://picsum.photos/700/900?random=27"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 8
-            ===================== */
-
             {
-
-                name: "محصول هشتم",
-
-                description:
-                    "توضیحات محصول هشتم",
-
+                id: 8,
+                name: "کد 8",
+                description: "محصول نمونه شماره 8",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول هشتم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "پنبه‌ای"],
+                    ["سایز", "8 تا 12 سال"],
+                    ["رنگ‌بندی", "طوسی، سفید"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=8",
-
                     "https://picsum.photos/700/900?random=18",
-
                     "https://picsum.photos/700/900?random=28"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 9
-            ===================== */
-
             {
-
-                name: "محصول نهم",
-
-                description:
-                    "توضیحات محصول نهم",
-
+                id: 9,
+                name: "کد 9",
+                description: "محصول نمونه شماره 9",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول نهم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس"],
+                    ["سایز", "10 تا 14 سال"],
+                    ["رنگ‌بندی", "مشکی، کرم، طوسی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=9",
-
                     "https://picsum.photos/700/900?random=19",
-
                     "https://picsum.photos/700/900?random=29"
-
                 ]
-
             },
 
-
-            /* =====================
-               PRODUCT 10
-            ===================== */
-
             {
-
-                name: "محصول دهم",
-
-                description:
-                    "توضیحات محصول دهم",
-
+                id: 10,
+                name: "کد 10",
+                description: "محصول نمونه شماره 10",
                 details: [
-
-                    [
-                        "مدل",
-                        "مدل محصول دهم"
-                    ],
-
-                    [
-                        "جنس",
-                        "جنس محصول"
-                    ],
-
-                    [
-                        "سایز",
-                        "سایزبندی محصول"
-                    ],
-
-                    [
-                        "رنگ‌بندی",
-                        "رنگ‌های موجود"
-                    ],
-
-                    [
-                        "تعداد در جین",
-                        "12 عدد"
-                    ],
-
-                    [
-                        "تعداد در کارتن",
-                        "24 عدد"
-                    ]
-
+                    ["مدل", "مدل نمونه"],
+                    ["جنس", "دورس پنبه‌ای"],
+                    ["سایز", "8 تا 12 سال"],
+                    ["رنگ‌بندی", "کرم، طوسی"]
                 ],
-
                 images: [
-
                     "https://picsum.photos/700/900?random=10",
-
                     "https://picsum.photos/700/900?random=20",
-
                     "https://picsum.photos/700/900?random=30"
-
                 ]
-
             }
-
         ];
 
+        const productsContainer = document.getElementById("products");
 
+        let currentProduct = null;
+        let currentImageIndex = 0;
 
-        /* =========================
-           ELEMENTS
-        ========================= */
+        /*
+         * جلوگیری از اجرای ناامن HTML برای اطلاعات متنی
+         */
 
-        const productsContainer =
-            document.getElementById(
-                "products"
-            );
+        function escapeHTML(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
+        /*
+         * نمایش محصولات
+         */
 
-        const galleryOverlay =
-            document.getElementById(
-                "galleryOverlay"
-            );
+        function renderProducts() {
+            productsContainer.innerHTML = "";
 
+            products.forEach(product => {
+                const article = document.createElement("article");
 
-        const detailsOverlay =
-            document.getElementById(
-                "detailsOverlay"
-            );
+                article.className = "product";
 
-
-        const galleryImage =
-            document.getElementById(
-                "galleryImage"
-            );
-
-
-        const galleryTitle =
-            document.getElementById(
-                "galleryTitle"
-            );
-
-
-        const galleryDescription =
-            document.getElementById(
-                "galleryDescription"
-            );
-
-
-        const counter =
-            document.getElementById(
-                "counter"
-            );
-
-
-        const detailsTitle =
-            document.getElementById(
-                "detailsTitle"
-            );
-
-
-        const detailsSubtitle =
-            document.getElementById(
-                "detailsSubtitle"
-            );
-
-
-        const detailsList =
-            document.getElementById(
-                "detailsList"
-            );
-
-
-
-        /* =========================
-           RENDER PRODUCTS
-        ========================= */
-
-        products.forEach(
-            (product, index) => {
-
-
-                const card =
-                    document.createElement(
-                        "article"
-                    );
-
-
-                card.className =
-                    "product";
-
-
-                card.innerHTML = `
-
+                article.innerHTML = `
                     <img
                         class="product-image"
-                        src="${product.images[0]}"
-                        alt="${product.name}"
+                        src="${escapeHTML(product.images[0])}"
+                        alt="${escapeHTML(product.name)}"
                         loading="lazy"
-                        onclick="openGallery(${index})">
-
+                    >
 
                     <div class="product-info">
 
+                        <h2 class="product-name">
+                            ${escapeHTML(product.name)}
+                        </h2>
 
-                        <div class="product-name">
-
-                            ${product.name}
-
-                        </div>
-
+                        <p class="product-description">
+                            ${escapeHTML(product.description)}
+                        </p>
 
                         <div class="product-actions">
 
-
                             <button
-                                type="button"
                                 class="product-button gallery-button"
-                                onclick="openGallery(${index})">
-
+                                type="button"
+                                onclick="openGallery(${product.id})"
+                            >
                                 🖼 مشاهده تصاویر
-
                             </button>
-
 
                             <button
-                                type="button"
                                 class="product-button details-button"
-                                onclick="openDetails(${index})">
-
+                                type="button"
+                                onclick="openDetails(${product.id})"
+                            >
                                 ✦ جزئیات
-
                             </button>
-
 
                         </div>
-
-
                     </div>
-
                 `;
 
+                productsContainer.appendChild(article);
+            });
+        }
 
-                productsContainer.appendChild(
-                    card
-                );
+        /*
+         * گالری تصاویر
+         */
 
+        function openGallery(productId) {
+            currentProduct = products.find(
+                product => product.id === productId
+            );
+
+            if (!currentProduct) {
+                return;
             }
-        );
 
+            currentImageIndex = 0;
 
+            document.getElementById("galleryTitle").textContent =
+                currentProduct.name;
 
-        /* =========================
-           GALLERY VARIABLES
-        ========================= */
-
-        let currentProduct = 0;
-
-        let currentImage = 0;
-
-
-
-        /* =========================
-           OPEN GALLERY
-        ========================= */
-
-        function openGallery(index) {
-
-            currentProduct =
-                index;
-
-            currentImage =
-                0;
+            document.getElementById("galleryDescription").textContent =
+                currentProduct.description;
 
             updateGallery();
 
-            galleryOverlay.classList.add(
-                "active"
-            );
+            document
+                .getElementById("galleryOverlay")
+                .classList.add("active");
 
-            document.body.style.overflow =
-                "hidden";
-
+            document.body.style.overflow = "hidden";
         }
-
-
-
-        /* =========================
-           UPDATE GALLERY
-        ========================= */
 
         function updateGallery() {
+            if (!currentProduct) {
+                return;
+            }
 
-            const product =
-                products[
-                    currentProduct
-                ];
+            const image = document.getElementById("galleryImage");
 
+            image.src = currentProduct.images[currentImageIndex];
 
-            galleryImage.src =
-                product.images[
-                    currentImage
-                ];
+            image.alt =
+                currentProduct.name +
+                " - تصویر " +
+                (currentImageIndex + 1);
 
-
-            galleryTitle.textContent =
-                product.name;
-
-
-            galleryDescription.textContent =
-                product.description;
-
-
-            counter.textContent =
-                `${currentImage + 1} / ${product.images.length}`;
-
+            document.getElementById("galleryCounter").textContent =
+                `${currentImageIndex + 1} / ${currentProduct.images.length}`;
         }
-
-
-
-        /* =========================
-           NEXT IMAGE
-        ========================= */
 
         function nextImage() {
-
-            const product =
-                products[
-                    currentProduct
-                ];
-
-
-            currentImage++;
-
-
-            if (
-                currentImage >=
-                product.images.length
-            ) {
-
-                currentImage = 0;
-
+            if (!currentProduct) {
+                return;
             }
 
+            currentImageIndex =
+                (currentImageIndex + 1) %
+                currentProduct.images.length;
 
             updateGallery();
-
         }
-
-
-
-        /* =========================
-           PREVIOUS IMAGE
-        ========================= */
 
         function previousImage() {
-
-            const product =
-                products[
-                    currentProduct
-                ];
-
-
-            currentImage--;
-
-
-            if (
-                currentImage < 0
-            ) {
-
-                currentImage =
-                    product.images.length - 1;
-
+            if (!currentProduct) {
+                return;
             }
 
+            currentImageIndex =
+                (currentImageIndex - 1 + currentProduct.images.length) %
+                currentProduct.images.length;
 
             updateGallery();
-
         }
-
-
-
-        /* =========================
-           CLOSE GALLERY
-        ========================= */
 
         function closeGallery() {
+            document
+                .getElementById("galleryOverlay")
+                .classList.remove("active");
 
-            galleryOverlay.classList.remove(
-                "active"
-            );
+            document.body.style.overflow = "";
 
-            document.body.style.overflow =
-                "";
-
+            currentProduct = null;
         }
 
+        /*
+         * جزئیات محصول
+         */
 
+        function openDetails(productId) {
+            const product = products.find(
+                item => item.id === productId
+            );
 
-        /* =========================
-           OPEN DETAILS
-        ========================= */
+            if (!product) {
+                return;
+            }
 
-        function openDetails(index) {
-
-            const product =
-                products[index];
-
-
-            detailsTitle.textContent =
+            document.getElementById("detailsTitle").textContent =
                 product.name;
 
-
-            detailsSubtitle.textContent =
+            document.getElementById("detailsDescription").textContent =
                 product.description;
 
+            const tableBody =
+                document.getElementById("detailsTableBody");
 
-            detailsList.innerHTML =
-                "";
+            tableBody.innerHTML = "";
 
+            product.details.forEach(detail => {
+                const row = document.createElement("tr");
 
-            product.details.forEach(
-                item => {
+                const keyCell = document.createElement("td");
+                const valueCell = document.createElement("td");
 
+                keyCell.textContent = detail[0];
+                valueCell.textContent = detail[1];
 
-                    const row =
-                        document.createElement(
-                            "div"
-                        );
+                row.appendChild(keyCell);
+                row.appendChild(valueCell);
 
+                tableBody.appendChild(row);
+            });
 
-                    row.className =
-                        "detail-row";
+            document
+                .getElementById("detailsOverlay")
+                .classList.add("active");
 
-
-                    row.innerHTML = `
-
-                        <div class="detail-key">
-
-                            ${item[0]}
-
-                        </div>
-
-
-                        <div class="detail-value">
-
-                            ${item[1]}
-
-                        </div>
-
-                    `;
-
-
-                    detailsList.appendChild(
-                        row
-                    );
-
-                }
-            );
-
-
-            detailsOverlay.classList.add(
-                "active"
-            );
-
-
-            document.body.style.overflow =
-                "hidden";
-
+            document.body.style.overflow = "hidden";
         }
-
-
-
-        /* =========================
-           CLOSE DETAILS
-        ========================= */
 
         function closeDetails() {
+            document
+                .getElementById("detailsOverlay")
+                .classList.remove("active");
 
-            detailsOverlay.classList.remove(
-                "active"
-            );
-
-            document.body.style.overflow =
-                "";
-
+            document.body.style.overflow = "";
         }
 
+        /*
+         * بستن پنجره‌ها با کلیک روی فضای بیرونی
+         */
 
-
-        /* =========================
-           CLOSE OVERLAYS BY BACKGROUND
-        ========================= */
-
-        galleryOverlay.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target ===
-                    galleryOverlay
-                ) {
-
+        document
+            .getElementById("galleryOverlay")
+            .addEventListener("click", function(event) {
+                if (event.target === this) {
                     closeGallery();
-
                 }
+            });
 
-            }
-        );
-
-
-        detailsOverlay.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target ===
-                    detailsOverlay
-                ) {
-
+        document
+            .getElementById("detailsOverlay")
+            .addEventListener("click", function(event) {
+                if (event.target === this) {
                     closeDetails();
+                }
+            });
 
+        /*
+         * کنترل با صفحه‌کلید در دسکتاپ
+         */
+
+        document.addEventListener("keydown", function(event) {
+            const galleryIsOpen =
+                document
+                    .getElementById("galleryOverlay")
+                    .classList.contains("active");
+
+            const detailsIsOpen =
+                document
+                    .getElementById("detailsOverlay")
+                    .classList.contains("active");
+
+            if (event.key === "Escape") {
+                if (galleryIsOpen) {
+                    closeGallery();
                 }
 
+                if (detailsIsOpen) {
+                    closeDetails();
+                }
             }
-        );
 
-
-        /* =========================
-           ESC KEY - DESKTOP
-        ========================= */
-
-        document.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    if (
-                        galleryOverlay.classList.contains("active")
-                    ) {
-
-                        closeGallery();
-
-                    }
-
-
-                    if (
-                        detailsOverlay.classList.contains("active")
-                    ) {
-
-                        closeDetails();
-
-                    }
-
+            if (galleryIsOpen) {
+                if (event.key === "ArrowLeft") {
+                    nextImage();
                 }
 
-
-                if (
-                    galleryOverlay.classList.contains("active")
-                ) {
-
-                    if (
-                        event.key === "ArrowRight"
-                    ) {
-
-                        nextImage();
-
-                    }
-
-
-                    if (
-                        event.key === "ArrowLeft"
-                    ) {
-
-                        previousImage();
-
-                    }
-
+                if (event.key === "ArrowRight") {
+                    previousImage();
                 }
-
             }
-        );
+        });
 
+        /*
+         * اجرای اولیه
+         */
 
+        renderProducts();
     </script>
 
 </body>
-
 </html>
