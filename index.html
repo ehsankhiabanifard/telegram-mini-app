@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -10,9 +11,10 @@
                    maximum-scale=1.0,
                    user-scalable=no">
 
-    <title>ویترین اشکان</title>
+    <title>ویترین فروشگاه</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 
     <style>
 
@@ -21,15 +23,43 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+
+        /* =========================
+           DARK LUXURY THEME
+        ========================= */
+
+        :root {
+
+            --bg: #0B0B0D;
+
+            --surface: #151519;
+
+            --surface-2: #1C1C21;
+
+            --border: #292930;
+
+            --text: #F5F5F5;
+
+            --muted: #9999A3;
+
+            --accent: #C8A96B;
+        }
+
+
         body {
+
             margin: 0;
-            font-family: Tahoma, Arial, sans-serif;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
 
             background:
-                var(--tg-theme-bg-color, #101114);
+                var(--bg);
 
             color:
-                var(--tg-theme-text-color, #ffffff);
+                var(--text);
 
             min-height: 100vh;
         }
@@ -40,43 +70,54 @@
         ========================= */
 
         .header {
-            padding: 22px 18px 16px;
+
+            padding:
+                25px 18px 20px;
 
             position: sticky;
+
             top: 0;
 
             z-index: 10;
 
             background:
-                color-mix(
-                    in srgb,
-                    var(--tg-theme-bg-color, #101114) 88%,
-                    transparent
-                );
+                rgba(11, 11, 13, .88);
 
-            backdrop-filter: blur(18px);
+            backdrop-filter:
+                blur(20px);
 
             border-bottom:
-                1px solid
-                var(--tg-theme-hint-color, #777);
+                1px solid var(--border);
         }
+
 
         .brand {
+
             font-size: 24px;
+
             font-weight: 800;
 
+            letter-spacing: -.5px;
+
             text-align: center;
+
+            color:
+                var(--text);
         }
 
+
         .subtitle {
-            margin-top: 6px;
+
+            margin-top: 7px;
 
             text-align: center;
 
             font-size: 12px;
 
             color:
-                var(--tg-theme-hint-color, #a0a0a0);
+                var(--muted);
+
+            letter-spacing: .3px;
         }
 
 
@@ -93,7 +134,7 @@
             grid-template-columns:
                 repeat(2, minmax(0, 1fr));
 
-            gap: 13px;
+            gap: 14px;
         }
 
 
@@ -101,25 +142,29 @@
 
             overflow: hidden;
 
-            border-radius: 20px;
+            border-radius: 18px;
 
             background:
-                var(--tg-theme-secondary-bg-color, #1b1c20);
+                var(--surface);
 
             border:
-                1px solid
-                rgba(255,255,255,.07);
+                1px solid var(--border);
 
             cursor: pointer;
 
             transition:
-                transform .18s ease,
-                box-shadow .18s ease;
+                transform .2s ease,
+                border-color .2s ease;
         }
+
 
         .product:active {
 
-            transform: scale(.96);
+            transform:
+                scale(.97);
+
+            border-color:
+                var(--accent);
         }
 
 
@@ -137,7 +182,8 @@
 
         .product-info {
 
-            padding: 11px 12px 14px;
+            padding:
+                12px 13px 15px;
         }
 
 
@@ -148,17 +194,20 @@
             font-weight: 700;
 
             line-height: 1.7;
+
+            color:
+                var(--text);
         }
 
 
         .view {
 
-            margin-top: 4px;
+            margin-top: 5px;
 
             font-size: 11px;
 
             color:
-                var(--tg-theme-link-color, #5ea7ff);
+                var(--accent);
         }
 
 
@@ -175,7 +224,7 @@
             z-index: 100;
 
             background:
-                rgba(0,0,0,.82);
+                rgba(0, 0, 0, .88);
 
             display: none;
 
@@ -183,7 +232,7 @@
 
             justify-content: center;
 
-            padding: 14px;
+            padding: 12px;
         }
 
 
@@ -203,13 +252,16 @@
 
             overflow-y: auto;
 
-            border-radius: 25px;
+            border-radius: 24px;
 
             background:
-                var(--tg-theme-bg-color, #101114);
+                var(--surface);
+
+            border:
+                1px solid var(--border);
 
             box-shadow:
-                0 25px 80px rgba(0,0,0,.5);
+                0 30px 100px rgba(0,0,0,.7);
 
             overflow: hidden;
         }
@@ -223,7 +275,8 @@
 
             position: relative;
 
-            background: #080808;
+            background:
+                #050506;
         }
 
 
@@ -239,6 +292,8 @@
         }
 
 
+        /* CLOSE */
+
         .close {
 
             position: absolute;
@@ -251,20 +306,26 @@
 
             height: 38px;
 
-            border: none;
+            border:
+                1px solid rgba(255,255,255,.15);
 
             border-radius: 50%;
 
             background:
-                rgba(0,0,0,.6);
+                rgba(0,0,0,.65);
 
-            color: white;
+            color:
+                white;
 
             font-size: 22px;
 
             z-index: 5;
+
+            cursor: pointer;
         }
 
+
+        /* ARROWS */
 
         .arrow {
 
@@ -272,22 +333,27 @@
 
             top: 50%;
 
-            transform: translateY(-50%);
+            transform:
+                translateY(-50%);
 
             width: 42px;
 
             height: 42px;
 
-            border: none;
+            border:
+                1px solid rgba(255,255,255,.12);
 
             border-radius: 50%;
 
             background:
-                rgba(0,0,0,.55);
+                rgba(0,0,0,.65);
 
-            color: white;
+            color:
+                white;
 
             font-size: 22px;
+
+            cursor: pointer;
         }
 
 
@@ -303,6 +369,8 @@
         }
 
 
+        /* COUNTER */
+
         .counter {
 
             position: absolute;
@@ -311,14 +379,20 @@
 
             left: 50%;
 
-            transform: translateX(-50%);
+            transform:
+                translateX(-50%);
 
-            padding: 5px 10px;
+            padding:
+                5px 11px;
 
-            border-radius: 20px;
+            border-radius:
+                20px;
 
             background:
-                rgba(0,0,0,.55);
+                rgba(0,0,0,.7);
+
+            color:
+                var(--accent);
 
             font-size: 11px;
         }
@@ -330,7 +404,8 @@
 
         .details {
 
-            padding: 18px;
+            padding:
+                19px;
         }
 
 
@@ -339,22 +414,61 @@
             margin: 0;
 
             font-size: 20px;
+
+            color:
+                var(--text);
         }
 
 
         .details p {
 
             margin:
-                8px 0 18px;
+                10px 0 20px;
 
             color:
-                var(--tg-theme-hint-color, #aaa);
+                var(--muted);
 
             font-size: 13px;
 
-            line-height: 1.9;
+            line-height: 2;
+
+            white-space:
+                pre-line;
+
+            max-height:
+                130px;
+
+            overflow-y:
+                auto;
+
+            padding-left:
+                6px;
         }
 
+
+        /* =========================
+           DESCRIPTION SCROLLBAR
+        ========================= */
+
+        .details p::-webkit-scrollbar {
+
+            width: 3px;
+        }
+
+
+        .details p::-webkit-scrollbar-thumb {
+
+            background:
+                var(--accent);
+
+            border-radius:
+                10px;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .actions {
 
@@ -369,35 +483,58 @@
 
         .action {
 
-            padding: 13px;
+            padding:
+                13px;
 
-            border-radius: 15px;
+            border-radius:
+                14px;
 
-            text-align: center;
+            text-align:
+                center;
 
-            text-decoration: none;
+            text-decoration:
+                none;
 
-            color: white;
+            color:
+                var(--text);
 
             background:
-                var(--tg-theme-secondary-bg-color, #222);
+                var(--surface-2);
 
-            font-size: 13px;
+            border:
+                1px solid var(--border);
 
-            font-weight: bold;
+            font-size:
+                13px;
+
+            font-weight:
+                bold;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .action:active {
+
+            transform:
+                scale(.97);
         }
 
 
         .action-map {
 
-            grid-column: 1 / -1;
+            grid-column:
+                1 / -1;
 
             background:
-                linear-gradient(
-                    135deg,
-                    #8b5cf6,
-                    #ec4899
-                );
+                var(--accent);
+
+            color:
+                #111;
+
+            border-color:
+                var(--accent);
         }
 
 
@@ -409,7 +546,8 @@
 
             .products {
 
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
         }
 
@@ -421,422 +559,637 @@
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-<header class="header">
+    <header class="header">
 
-    <div class="brand">
-        ✦ ویترین تولید و پخش اشکان
-    </div>
+        <div class="brand">
+            ✦ ویترین فروشگاه
+        </div>
 
-    <div class="subtitle">
-       کالکشن پاییزه
-    </div>
+        <div class="subtitle">
+            جدیدترین محصولات
+        </div>
 
-</header>
-
-
-
-<!-- =========================
-     PRODUCTS
-========================= -->
-
-<main class="products" id="products"></main>
+    </header>
 
 
 
-<!-- =========================
-     PRODUCT MODAL
-========================= -->
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
 
-<div class="modal" id="modal">
-
-    <div class="modal-box">
-
-        <div class="gallery">
-
-            <button
-                class="close"
-                onclick="closeProduct()">
-                ×
-            </button>
+    <main
+        class="products"
+        id="products">
+    </main>
 
 
-            <img
-                id="galleryImage"
-                src=""
-                alt="">
+
+    <!-- =========================
+         PRODUCT MODAL
+    ========================= -->
+
+    <div
+        class="modal"
+        id="modal">
+
+        <div class="modal-box">
 
 
-            <button
-                class="arrow arrow-right"
-                onclick="nextImage()">
-                ›
-            </button>
+            <!-- GALLERY -->
+
+            <div class="gallery">
 
 
-            <button
-                class="arrow arrow-left"
-                onclick="previousImage()">
-                ‹
-            </button>
+                <button
+                    class="close"
+                    onclick="closeProduct()">
+
+                    ×
+
+                </button>
 
 
-            <div
-                class="counter"
-                id="counter">
+                <img
+                    id="galleryImage"
+                    src=""
+                    alt="">
+
+
+                <button
+                    class="arrow arrow-right"
+                    onclick="nextImage()">
+
+                    ›
+                    
+                </button>
+
+
+                <button
+                    class="arrow arrow-left"
+                    onclick="previousImage()">
+
+                    ‹
+
+                </button>
+
+
+                <div
+                    class="counter"
+                    id="counter">
+                </div>
+
+
             </div>
+
+
+
+            <!-- DETAILS -->
+
+            <div class="details">
+
+
+                <h2
+                    id="productTitle">
+                </h2>
+
+
+                <p
+                    id="productDescription">
+                </p>
+
+
+
+                <div class="actions">
+
+
+                    <a
+                        class="action"
+                        href="https://t.me/ehsanfard_dev">
+
+                        💬 مشاوره
+
+                    </a>
+
+
+                    <a
+                        class="action"
+                        href="https://wa.me/989124107390">
+
+                        📱 واتساپ
+
+                    </a>
+
+
+                    <a
+                        class="action action-map"
+                        href="https://nshn.ir/?destination=35.7208900062934,51.47694936039926&vehicle=d">
+
+                        📍 مسیریابی تا فروشگاه →
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
 
         </div>
 
-
-        <div class="details">
-
-            <h2 id="productTitle"></h2>
-
-            <p id="productDescription"></p>
-
-
-            <div class="actions">
-            </div>
-
-        </div>
-
     </div>
 
-</div>
 
 
+    <script>
 
-<script>
 
-    /* =========================
-       TELEGRAM
-    ========================= */
+        /* =========================
+           TELEGRAM WEB APP
+        ========================= */
 
-    const tg = window.Telegram?.WebApp;
+        const tg =
+            window.Telegram?.WebApp;
 
-    if (tg) {
 
-        tg.ready();
+        if (tg) {
 
-        tg.expand();
+            tg.ready();
 
-    }
-
-
-
-    /* =========================
-       PRODUCTS DATA
-    ========================= */
-
-    const products = [
-
-        {
-            name: "کد 100",
-            description: "باکسی اورسایز چاپ پیش و رو\nمناسب سن 10 تا 14 سال\nپارچه با کیفیت و لطیف\nموجود در چند رنگ",
-            images: [
-                "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-0.png",
-                 "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-1.png",
-                 "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-2.png",
-                "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-3.png",
-                "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-4.png",
-            ]
-        },
-
-        {
-            name: "ست پاییزی دخترانه",
-            description: "استایل پاییزی با طراحی مدرن.",
-            images: [
-                "https://picsum.photos/700/900?random=2",
-                "https://picsum.photos/700/900?random=12",
-                "https://picsum.photos/700/900?random=22"
-            ]
-        },
-
-        {
-            name: "هودی اورسایز",
-            description: "طراحی راحت و مناسب استایل روزمره.",
-            images: [
-                "https://picsum.photos/700/900?random=3",
-                "https://picsum.photos/700/900?random=13",
-                "https://picsum.photos/700/900?random=23"
-            ]
-        },
-
-        {
-            name: "ست اسپرت پسرانه",
-            description: "استایل اسپرت مناسب نوجوانان.",
-            images: [
-                "https://picsum.photos/700/900?random=4",
-                "https://picsum.photos/700/900?random=14",
-                "https://picsum.photos/700/900?random=24"
-            ]
-        },
-
-        {
-            name: "دامن بافت",
-            description: "بافت ظریف با استایل پاییزی.",
-            images: [
-                "https://picsum.photos/700/900?random=5",
-                "https://picsum.photos/700/900?random=15",
-                "https://picsum.photos/700/900?random=25"
-            ]
-        },
-
-        {
-            name: "شلوار بگی",
-            description: "فرم آزاد و ترند برای استایل خیابانی.",
-            images: [
-                "https://picsum.photos/700/900?random=6",
-                "https://picsum.photos/700/900?random=16",
-                "https://picsum.photos/700/900?random=26"
-            ]
-        },
-
-        {
-            name: "تیشرت باکسی",
-            description: "مدل مینیمال با فرم آزاد.",
-            images: [
-                "https://picsum.photos/700/900?random=7",
-                "https://picsum.photos/700/900?random=17",
-                "https://picsum.photos/700/900?random=27"
-            ]
-        },
-
-        {
-            name: "کت پاییزی",
-            description: "استایل شیک مناسب فصل پاییز.",
-            images: [
-                "https://picsum.photos/700/900?random=8",
-                "https://picsum.photos/700/900?random=18",
-                "https://picsum.photos/700/900?random=28"
-            ]
-        },
-
-        {
-            name: "بافت دخترانه",
-            description: "طراحی ظریف و مناسب استایل روزمره.",
-            images: [
-                "https://picsum.photos/700/900?random=9",
-                "https://picsum.photos/700/900?random=19",
-                "https://picsum.photos/700/900?random=29"
-            ]
-        },
-
-        {
-            name: "ست راحتی",
-            description: "استایل راحت و مدرن برای استفاده روزمره.",
-            images: [
-                "https://picsum.photos/700/900?random=10",
-                "https://picsum.photos/700/900?random=20",
-                "https://picsum.photos/700/900?random=30"
-            ]
-        }
-
-    ];
-
-
-
-    /* =========================
-       RENDER PRODUCTS
-    ========================= */
-
-    const productsContainer =
-        document.getElementById("products");
-
-
-    products.forEach((product, index) => {
-
-        const card =
-            document.createElement("article");
-
-        card.className = "product";
-
-
-        card.innerHTML = `
-
-            <img
-                class="product-image"
-                src="${product.images[0]}"
-                alt="${product.name}">
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    ${product.name}
-                </div>
-
-                <div class="view">
-                    مشاهده تصاویر ←
-                </div>
-
-            </div>
-
-        `;
-
-
-        card.onclick = () => {
-
-            openProduct(index);
-
-        };
-
-
-        productsContainer.appendChild(card);
-
-    });
-
-
-
-    /* =========================
-       GALLERY
-    ========================= */
-
-    let currentProduct = 0;
-
-    let currentImage = 0;
-
-
-    const modal =
-        document.getElementById("modal");
-
-    const galleryImage =
-        document.getElementById("galleryImage");
-
-    const productTitle =
-        document.getElementById("productTitle");
-
-    const productDescription =
-        document.getElementById("productDescription");
-
-    const counter =
-        document.getElementById("counter");
-
-
-
-    function openProduct(index) {
-
-        currentProduct = index;
-
-        currentImage = 0;
-
-        updateGallery();
-
-        modal.classList.add("active");
-
-        document.body.style.overflow = "hidden";
-
-    }
-
-
-
-    function updateGallery() {
-
-        const product =
-            products[currentProduct];
-
-
-        galleryImage.src =
-            product.images[currentImage];
-
-
-        productTitle.textContent =
-            product.name;
-
-
-        productDescription.textContent =
-            product.description;
-
-
-        counter.textContent =
-            `${currentImage + 1} / ${product.images.length}`;
-
-    }
-
-
-
-    function nextImage() {
-
-        const product =
-            products[currentProduct];
-
-
-        currentImage++;
-
-
-        if (
-            currentImage >=
-            product.images.length
-        ) {
-
-            currentImage = 0;
+            tg.expand();
 
         }
 
 
-        updateGallery();
 
-    }
+        /* =========================
+           PRODUCTS
+        ========================= */
 
-
-
-    function previousImage() {
-
-        const product =
-            products[currentProduct];
+        const products = [
 
 
-        currentImage--;
+            {
+                name: "کد 100",
+
+                description:
+                    "باکسی اورسایز چاپ پیش و رو\n\nمناسب سن 10 تا 14 سال\nجنس: با کیفیت\nمدل: آزاد و اورسایز\nاستایل: اسپرت و روزمره",
+
+                images: [
+
+                    "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-0.png",
+
+                    "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-1.png",
+
+                    "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-2.png",
+
+                    "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-3.png",
+
+                    "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/images/IMG-100-4.png"
+
+                ]
+
+            },
 
 
-        if (currentImage < 0) {
+            {
+                name: "محصول دوم",
 
-            currentImage =
-                product.images.length - 1;
+                description:
+                    "توضیحات محصول دوم",
 
-        }
+                images: [
 
+                    "https://picsum.photos/700/900?random=2",
 
-        updateGallery();
+                    "https://picsum.photos/700/900?random=12",
 
-    }
+                    "https://picsum.photos/700/900?random=22"
 
+                ]
 
-
-    function closeProduct() {
-
-        modal.classList.remove("active");
-
-        document.body.style.overflow = "";
-
-    }
+            },
 
 
+            {
+                name: "محصول سوم",
 
-    /* =========================
-       CLOSE BY BACKGROUND
-    ========================= */
+                description:
+                    "توضیحات محصول سوم",
 
-    modal.addEventListener(
-        "click",
-        function(event) {
+                images: [
 
-            if (
-                event.target === modal
-            ) {
+                    "https://picsum.photos/700/900?random=3",
 
-                closeProduct();
+                    "https://picsum.photos/700/900?random=13",
+
+                    "https://picsum.photos/700/900?random=23"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول چهارم",
+
+                description:
+                    "توضیحات محصول چهارم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=4",
+
+                    "https://picsum.photos/700/900?random=14",
+
+                    "https://picsum.photos/700/900?random=24"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول پنجم",
+
+                description:
+                    "توضیحات محصول پنجم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=5",
+
+                    "https://picsum.photos/700/900?random=15",
+
+                    "https://picsum.photos/700/900?random=25"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول ششم",
+
+                description:
+                    "توضیحات محصول ششم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=6",
+
+                    "https://picsum.photos/700/900?random=16",
+
+                    "https://picsum.photos/700/900?random=26"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول هفتم",
+
+                description:
+                    "توضیحات محصول هفتم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=7",
+
+                    "https://picsum.photos/700/900?random=17",
+
+                    "https://picsum.photos/700/900?random=27"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول هشتم",
+
+                description:
+                    "توضیحات محصول هشتم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=8",
+
+                    "https://picsum.photos/700/900?random=18",
+
+                    "https://picsum.photos/700/900?random=28"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول نهم",
+
+                description:
+                    "توضیحات محصول نهم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=9",
+
+                    "https://picsum.photos/700/900?random=19",
+
+                    "https://picsum.photos/700/900?random=29"
+
+                ]
+
+            },
+
+
+            {
+                name: "محصول دهم",
+
+                description:
+                    "توضیحات محصول دهم",
+
+                images: [
+
+                    "https://picsum.photos/700/900?random=10",
+
+                    "https://picsum.photos/700/900?random=20",
+
+                    "https://picsum.photos/700/900?random=30"
+
+                ]
 
             }
 
+        ];
+
+
+
+        /* =========================
+           RENDER PRODUCTS
+        ========================= */
+
+        const productsContainer =
+            document.getElementById(
+                "products"
+            );
+
+
+        products.forEach(
+            (product, index) => {
+
+
+                const card =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                card.className =
+                    "product";
+
+
+                card.innerHTML = `
+
+                    <img
+                        class="product-image"
+                        src="${product.images[0]}"
+                        alt="${product.name}">
+
+                    <div class="product-info">
+
+                        <div class="product-name">
+                            ${product.name}
+                        </div>
+
+                        <div class="view">
+                            مشاهده تصاویر ←
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                card.onclick = () => {
+
+                    openProduct(index);
+
+                };
+
+
+                productsContainer.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           GALLERY VARIABLES
+        ========================= */
+
+        let currentProduct = 0;
+
+        let currentImage = 0;
+
+
+        const modal =
+            document.getElementById(
+                "modal"
+            );
+
+
+        const galleryImage =
+            document.getElementById(
+                "galleryImage"
+            );
+
+
+        const productTitle =
+            document.getElementById(
+                "productTitle"
+            );
+
+
+        const productDescription =
+            document.getElementById(
+                "productDescription"
+            );
+
+
+        const counter =
+            document.getElementById(
+                "counter"
+            );
+
+
+
+        /* =========================
+           OPEN PRODUCT
+        ========================= */
+
+        function openProduct(index) {
+
+            currentProduct =
+                index;
+
+            currentImage =
+                0;
+
+            updateGallery();
+
+            modal.classList.add(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "hidden";
         }
-    );
 
 
-</script>
+
+        /* =========================
+           UPDATE GALLERY
+        ========================= */
+
+        function updateGallery() {
+
+            const product =
+                products[
+                    currentProduct
+                ];
+
+
+            galleryImage.src =
+                product.images[
+                    currentImage
+                ];
+
+
+            productTitle.textContent =
+                product.name;
+
+
+            productDescription.textContent =
+                product.description;
+
+
+            counter.textContent =
+                `${currentImage + 1} / ${product.images.length}`;
+
+        }
+
+
+
+        /* =========================
+           NEXT IMAGE
+        ========================= */
+
+        function nextImage() {
+
+            const product =
+                products[
+                    currentProduct
+                ];
+
+
+            currentImage++;
+
+
+            if (
+                currentImage >=
+                product.images.length
+            ) {
+
+                currentImage = 0;
+
+            }
+
+
+            updateGallery();
+
+        }
+
+
+
+        /* =========================
+           PREVIOUS IMAGE
+        ========================= */
+
+        function previousImage() {
+
+            const product =
+                products[
+                    currentProduct
+                ];
+
+
+            currentImage--;
+
+
+            if (
+                currentImage < 0
+            ) {
+
+                currentImage =
+                    product.images.length - 1;
+
+            }
+
+
+            updateGallery();
+
+        }
+
+
+
+        /* =========================
+           CLOSE PRODUCT
+        ========================= */
+
+        function closeProduct() {
+
+            modal.classList.remove(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+
+        /* =========================
+           CLOSE BY BACKGROUND
+        ========================= */
+
+        modal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === modal
+                ) {
+
+                    closeProduct();
+
+                }
+
+            }
+        );
+
+
+    </script>
 
 </body>
+
 </html>
