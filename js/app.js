@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
 
     try {
-
+loading.innerHTML = "مرحله 0:...";
         hideError();
 
         showLoading();
