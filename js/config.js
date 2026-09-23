@@ -40,11 +40,11 @@ const STORE_CONFIG = {
     },
 
     footer: {
-        address: "تهران، آدرس فروشگاه",
+        address: "تهران، لاله زار، کوچه برلن ، پاساژ آسیا ط اول پلاک 34 ",
 
-        phone: "021-12345678",
+        phone: "021-33986548",
 
-        mobile: "0912-123-4567",
+        mobile: "0912-713-5160",
 
         instagram: {
             title: "اینستاگرام",
@@ -53,7 +53,7 @@ const STORE_CONFIG = {
 
         rubika: {
             title: "روبیکا",
-            url: "https://rubika.ir/yourpage"
+            url: "https://rubika.ir/joinc/EDBIJGHI0BFSXTGTTNJTQBBBUDDCXMEZ"
         },
 
         telegram: {
