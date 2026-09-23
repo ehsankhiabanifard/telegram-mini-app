@@ -1492,3 +1492,159 @@ function escapeHTML(value) {
         );
 
 }
+
+function renderFooter() {
+    if (!storeFooter) return;
+
+    const footer = STORE_CONFIG.footer;
+
+    if (!footer) {
+        storeFooter.innerHTML = "";
+        return;
+    }
+
+    let html = `
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                <h2>${escapeHTML(STORE_CONFIG.title || "")}</h2>
+
+                ${
+                    STORE_CONFIG.subtitle
+                        ? `<p>${escapeHTML(STORE_CONFIG.subtitle)}</p>`
+                        : ""
+                }
+            </div>
+    `;
+
+
+    /* =========================
+       اطلاعات تماس
+       ========================= */
+
+    const hasContactInfo =
+        footer.address ||
+        footer.phone ||
+        footer.mobile;
+
+    if (hasContactInfo) {
+
+        html += `
+            <div class="footer-contact">
+
+                <h3>اطلاعات تماس</h3>
+        `;
+
+        if (footer.address) {
+            html += `
+                <div class="footer-contact-item">
+                    <span class="footer-contact-icon">⌖</span>
+                    <span>${escapeHTML(footer.address)}</span>
+                </div>
+            `;
+        }
+
+        if (footer.phone) {
+            html += `
+                <a
+                    class="footer-contact-item footer-link"
+                    href="tel:${escapeHTML(footer.phone)}"
+                >
+                    <span class="footer-contact-icon">☎</span>
+                    <span>${escapeHTML(footer.phone)}</span>
+                </a>
+            `;
+        }
+
+        if (footer.mobile) {
+            html += `
+                <a
+                    class="footer-contact-item footer-link"
+                    href="tel:${escapeHTML(footer.mobile)}"
+                >
+                    <span class="footer-contact-icon">📱</span>
+                    <span>${escapeHTML(footer.mobile)}</span>
+                </a>
+            `;
+        }
+
+        html += `
+            </div>
+        `;
+    }
+
+
+    /* =========================
+       شبکه‌های اجتماعی
+       ========================= */
+
+    const socialItems = [
+        footer.instagram,
+        footer.rubika,
+        footer.telegram,
+        footer.whatsapp
+    ].filter(item => item && item.url);
+
+
+    if (socialItems.length) {
+
+        html += `
+            <div class="footer-social">
+
+                <h3>ما را دنبال کنید</h3>
+
+                <div class="footer-social-links">
+        `;
+
+        socialItems.forEach(item => {
+
+            let icon = "↗";
+
+            if (item === footer.instagram) {
+                icon = "◎";
+            }
+
+            if (item === footer.rubika) {
+                icon = "◆";
+            }
+
+            if (item === footer.telegram) {
+                icon = "✈";
+            }
+
+            if (item === footer.whatsapp) {
+                icon = "◉";
+            }
+
+            html += `
+                <a
+                    class="footer-social-link"
+                    href="${escapeHTML(item.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="footer-social-icon">${icon}</span>
+                    <span>${escapeHTML(item.title || "")}</span>
+                </a>
+            `;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+    }
+
+
+    html += `
+        </div>
+
+        <div class="footer-bottom">
+            <span>© ${new Date().getFullYear()}</span>
+            <span>${escapeHTML(STORE_CONFIG.title || "")}</span>
+            <span>تمامی حقوق محفوظ است</span>
+        </div>
+    `;
+
+    storeFooter.innerHTML = html;
+}
