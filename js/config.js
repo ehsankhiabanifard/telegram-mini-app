@@ -1,5 +1,4 @@
 
-```javascript
 const STORE_CONFIG = {
 
     title: "ویترین پوشاک اشکان",
@@ -47,4 +46,4 @@ const STORE_CONFIG = {
     }
 
 };
-```
+
