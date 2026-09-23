@@ -81,13 +81,19 @@ async function init() {
 
         showLoading();
 
-        applyStoreConfig();
+applyStoreConfig();
 
-        await loadProducts();
+loading.innerHTML = "مرحله 1: شروع دریافت محصولات...";
 
-        renderProducts();
+await loadProducts();
 
-        hideLoading();
+loading.innerHTML = "مرحله 2: محصولات دریافت شدند...";
+
+renderProducts();
+
+loading.innerHTML = "مرحله 3: محصولات ساخته شدند...";
+
+hideLoading();
 
     } catch (error) {
 
