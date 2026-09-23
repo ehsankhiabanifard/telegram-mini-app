@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,129 +12,352 @@
 
     <title>ویترین پوشاک اشکان</title>
 
-    <!-- Google Font -->
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
     <link
         href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <!-- Telegram Mini App -->
+
+    <!-- =====================================================
+         TELEGRAM MINI APP
+    ====================================================== -->
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css?v=2"
+    >
+
 </head>
+
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <!-- Header -->
-        <header class="store-header">
 
-            <div class="header-content">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-                <div class="brand">
-                    <h1 id="storeTitle">ویترین پوشاک اشکان</h1>
-                    <p id="storeSubtitle">
-                        مجموعه‌ای از جدیدترین مدل‌های پاییزی با کیفیت عالی
-                    </p>
-                </div>
+    <header class="store-header">
+
+        <div class="header-content">
+
+            <div class="brand">
+
+                <h1 id="storeTitle">
+                    ویترین پوشاک اشکان
+                </h1>
+
+                <p id="storeSubtitle">
+                    مجموعه‌ای از جدیدترین مدل‌های پاییزی با کیفیت عالی
+                </p>
 
             </div>
 
-        </header>
-
-
-        <!-- Loading -->
-        <div id="loading" class="loading">
-            <div class="loading-spinner"></div>
-            <span>در حال بارگذاری محصولات...</span>
         </div>
 
-
-        <!-- Error -->
-        <div id="errorMessage" class="error-message hidden">
-            <div class="error-icon">!</div>
-
-            <h3>خطا در بارگذاری</h3>
-
-            <p>
-                اطلاعات محصولات دریافت نشد.
-                لطفاً اتصال اینترنت را بررسی کرده و دوباره تلاش کنید.
-            </p>
-
-            <button id="retryButton" class="retry-button">
-                تلاش مجدد
-            </button>
-        </div>
+    </header>
 
 
-        <!-- Products -->
-        <main
-            id="productsGrid"
-            class="products-grid"
-            aria-live="polite"
-        ></main>
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
+    <div
+        id="loading"
+        class="loading"
+    >
+
+        <div class="loading-spinner"></div>
+
+        <span>
+            در حال بارگذاری محصولات...
+        </span>
 
     </div>
 
 
-    <!-- Gallery Modal -->
+    <!-- =====================================================
+         ERROR
+    ====================================================== -->
+
     <div
-        id="galleryModal"
-        class="modal-overlay hidden"
-        role="dialog"
-        aria-modal="true"
-        aria-label="گالری تصاویر محصول"
+        id="errorMessage"
+        class="error-message hidden"
     >
 
-        <div class="gallery-modal">
+        <div class="error-icon">
+            !
+        </div>
 
-            <button
-                id="galleryClose"
-                class="modal-close"
-                type="button"
-                aria-label="بستن"
-            >
-                ×
-            </button>
+        <h3>
+            خطا در بارگذاری
+        </h3>
+
+        <p>
+            اطلاعات محصولات دریافت نشد.
+            <br>
+            لطفاً اتصال اینترنت را بررسی کرده و دوباره تلاش کنید.
+        </p>
+
+        <button
+            id="retryButton"
+            class="retry-button"
+            type="button"
+        >
+            تلاش مجدد
+        </button>
+
+    </div>
 
 
-            <button
-                id="galleryPrev"
-                class="gallery-arrow gallery-prev"
-                type="button"
-                aria-label="تصویر قبلی"
-            >
-                ‹
-            </button>
+    <!-- =====================================================
+         PRODUCTS
+    ====================================================== -->
+
+    <main
+        id="productsGrid"
+        class="products-grid"
+        aria-live="polite"
+    ></main>
 
 
-            <div class="gallery-content">
+</div>
 
-                <div class="gallery-image-wrapper">
 
-                    <img
-                        id="galleryImage"
-                        class="gallery-image"
-                        src=""
-                        alt=""
-                    >
 
+<!-- =========================================================
+     GALLERY MODAL
+========================================================= -->
+
+<div
+    id="galleryModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="گالری تصاویر محصول"
+>
+
+    <div class="gallery-modal">
+
+
+        <!-- Close -->
+
+        <button
+            id="galleryClose"
+            class="modal-close"
+            type="button"
+            aria-label="بستن"
+        >
+            ×
+        </button>
+
+
+        <!-- Previous -->
+
+        <button
+            id="galleryPrev"
+            class="gallery-arrow gallery-prev"
+            type="button"
+            aria-label="تصویر قبلی"
+        >
+            ‹
+        </button>
+
+
+        <!-- Gallery Content -->
+
+        <div class="gallery-content">
+
+
+            <!-- Image -->
+
+            <div class="gallery-image-wrapper">
+
+                <img
+                    id="galleryImage"
+                    class="gallery-image"
+                    src=""
+                    alt=""
+                >
+
+            </div>
+
+
+            <!-- Information -->
+
+            <div class="gallery-info">
+
+                <h2 id="galleryTitle"></h2>
+
+                <p id="galleryDescription"></p>
+
+                <div
+                    id="galleryCounter"
+                    class="gallery-counter"
+                >
+                    1 / 1
                 </div>
 
+            </div>
 
-                <div class="gallery-info">
+        </div>
 
-                    <h2 id="galleryTitle"></h2>
 
-                    <p id="galleryDescription"></p>
+        <!-- Next -->
 
-                    <div
-                        id="galleryCounter"
-                        class="gallery-counter"
-                    >
-                        1 / 1
-                    </
+        <button
+            id="galleryNext"
+            class="gallery-arrow gallery-next"
+            type="button"
+            aria-label="تصویر بعدی"
+        >
+            ›
+        </button>
 
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     DETAILS MODAL
+========================================================= -->
+
+<div
+    id="detailsModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="جزئیات محصول"
+>
+
+    <div class="details-modal">
+
+
+        <!-- Close -->
+
+        <button
+            id="detailsClose"
+            class="modal-close"
+            type="button"
+            aria-label="بستن"
+        >
+            ×
+        </button>
+
+
+        <!-- Details Header -->
+
+        <div class="details-header">
+
+            <div
+                id="detailsCode"
+                class="details-code"
+            ></div>
+
+            <h2 id="detailsTitle"></h2>
+
+            <p id="detailsDescription"></p>
+
+            <div
+                id="detailsStatus"
+                class="details-status"
+            ></div>
+
+        </div>
+
+
+        <!-- Details Table -->
+
+        <div class="details-table-wrapper">
+
+            <table
+                id="detailsTable"
+                class="details-table"
+            >
+
+                <tbody></tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Contact Buttons -->
+
+        <div class="details-actions">
+
+
+            <a
+                id="telegramButton"
+                class="contact-button telegram-button"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="contact-icon">✈</span>
+                <span>ارتباط در تلگرام</span>
+            </a>
+
+
+            <a
+                id="whatsappButton"
+                class="contact-button whatsapp-button"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="contact-icon">◉</span>
+                <span>ارتباط در واتساپ</span>
+            </a>
+
+
+            <a
+                id="locationButton"
+                class="contact-button location-button"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="contact-icon">⌖</span>
+                <span>مشاهده آدرس روی نقشه</span>
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="./js/config.js?v=2"></script>
+
+<script src="./js/app.js?v=2"></script>
+
+
+</body>
+
+</html>
