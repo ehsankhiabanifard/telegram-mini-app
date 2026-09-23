@@ -529,9 +529,9 @@ function openGallery(product) {
     );
 
 
-    preloadGalleryImages(
-        product
-    );
+   // preloadGalleryImages(
+      //  product
+   // );
 
 }
 
