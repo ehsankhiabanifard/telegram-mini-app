@@ -144,7 +144,7 @@ function applyStoreConfig() {
 async function loadProducts() {
 
     const productsURL =
-        "./data/products.json?v=" + Date.now();
+        "./data/products.json";
 
     /*
        جلوگیری از گیر کردن بی‌نهایت روی Loading
