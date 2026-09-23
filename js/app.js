@@ -1,4 +1,4 @@
-```javascript
+
 "use strict";
 
 /* =========================================================
@@ -140,61 +140,98 @@ function applyStoreConfig() {
    LOAD PRODUCTS
 ========================================================= */
 
+
 async function loadProducts() {
 
+    const productsURL =
+        "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/data/products.json";
+
+
     /*
-       چون پروژه روی GitHub Pages است،
-       مسیر را مستقیماً از ریشه پروژه مشخص می‌کنیم.
+       جلوگیری از گیر کردن بی‌نهایت روی Loading
     */
 
-    const productsURL =
-        "/telegram-mini-app/data/products.json";
+    const controller =
+        new AbortController();
 
 
-    const response =
-        await fetch(
-            productsURL,
-            {
-                method: "GET",
-                cache: "no-store"
-            }
-        );
+    const timeout =
+        setTimeout(() => {
+
+            controller.abort();
+
+        }, 10000);
 
 
-    if (!response.ok) {
+    try {
 
-        throw new Error(
-            `خطا در دریافت products.json — HTTP ${response.status}`
-        );
+        const response =
+            await fetch(
+                productsURL,
+                {
+                    method: "GET",
+                    cache: "no-store",
+                    signal: controller.signal
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `خطا در دریافت محصولات — HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "ساختار products.json صحیح نیست."
+            );
+
+        }
+
+
+        if (data.length === 0) {
+
+            throw new Error(
+                "هیچ محصولی در products.json وجود ندارد."
+            );
+
+        }
+
+
+        PRODUCTS = data;
+
+
+    } catch (error) {
+
+        if (error.name === "AbortError") {
+
+            throw new Error(
+                "زمان دریافت products.json تمام شد. اتصال به GitHub را بررسی کنید."
+            );
+
+        }
+
+
+        throw error;
+
+    } finally {
+
+        clearTimeout(timeout);
 
     }
-
-
-    const data =
-        await response.json();
-
-
-    if (!Array.isArray(data)) {
-
-        throw new Error(
-            "ساختار products.json صحیح نیست. فایل باید شامل یک آرایه JSON باشد."
-        );
-
-    }
-
-
-    if (data.length === 0) {
-
-        throw new Error(
-            "products.json خالی است و هیچ محصولی در آن وجود ندارد."
-        );
-
-    }
-
-
-    PRODUCTS = data;
 
 }
+
+
 
 
 /* =========================================================
@@ -601,4 +638,4 @@ function preloadGalleryImages(product) {
 
 
 function ne
-```
+
