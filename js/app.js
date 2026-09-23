@@ -100,7 +100,7 @@ const whatsappButton =
 const locationButton =
     document.getElementById("locationButton");
 
-
+const detailsProductImage = document.getElementById("detailsProductImage");
 /* =========================================================
    TELEGRAM MINI APP
 ========================================================= */
