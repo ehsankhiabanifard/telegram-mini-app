@@ -136,7 +136,7 @@ async function init() {
         showLoading();
 
         applyStoreConfig();
-
+        renderFooter();
         await loadProducts();
 
         renderProducts();
