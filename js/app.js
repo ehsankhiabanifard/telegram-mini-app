@@ -143,88 +143,33 @@ function applyStoreConfig() {
 
 async function loadProducts() {
 
-    const productsURL =
-        "./data/products.json";
-
-    /*
-       جلوگیری از گیر کردن بی‌نهایت روی Loading
-    */
-
-    const controller =
-        new AbortController();
-
-
-    const timeout =
-        setTimeout(() => {
-
-            controller.abort();
-
-        }, 10000);
-
+    const productsURL = "./data/products.json?v=" + Date.now();
 
     try {
 
-        const response =
-            await fetch(
-                productsURL,
-                {
-                    method: "GET",
-                    cache: "no-store",
-                    signal: controller.signal
-                }
-            );
-
+        const response = await fetch(productsURL);
 
         if (!response.ok) {
-
             throw new Error(
-                `خطا در دریافت محصولات — HTTP ${response.status}`
+                `HTTP ${response.status}`
             );
-
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!Array.isArray(data)) {
-
             throw new Error(
-                "ساختار products.json صحیح نیست."
+                "products.json آرایه نیست."
             );
-
         }
-
-
-        if (data.length === 0) {
-
-            throw new Error(
-                "هیچ محصولی در products.json وجود ندارد."
-            );
-
-        }
-
 
         PRODUCTS = data;
 
-
     } catch (error) {
 
-        if (error.name === "AbortError") {
-
-            throw new Error(
-                "زمان دریافت products.json تمام شد. اتصال به GitHub را بررسی کنید."
-            );
-
-        }
-
-
-        throw error;
-
-    } finally {
-
-        clearTimeout(timeout);
+        throw new Error(
+            "خطا در دریافت محصولات: " + error.message
+        );
 
     }
 
