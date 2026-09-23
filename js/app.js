@@ -846,5 +846,6 @@ function handleSwipe() {
     }
 
 }
-
+console.log("APP.JS LOADED");
+console.log("PRODUCTS:", PRODUCTS);
 
