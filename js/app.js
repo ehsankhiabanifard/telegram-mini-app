@@ -1256,9 +1256,8 @@ function openDetails(product) {
         details["مدل"] || "";
 
     // کد محصول
-    // کد طلایی باید در HTML وجود داشته باشد
-    // پس فعلاً از detailsCode استفاده نمی‌کنیم
-
+       detailsCode.textContent =
+        product.id ? `کد ${product.id}` : "";
     // مدل
     detailsTitle.textContent =
         details["مدل"] || "";
