@@ -1408,7 +1408,8 @@ function renderDetailsTable(product) {
 ========================================================= */
 
 function closeDetails() {
-
+detailsProductImage.src = "";
+detailsProductImage.alt = "";
     detailsModal.classList.add(
         "hidden"
     );
