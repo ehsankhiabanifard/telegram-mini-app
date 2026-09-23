@@ -1,5 +1,5 @@
-
 "use strict";
+
 
 /* =========================================================
    GLOBAL STATE
@@ -10,47 +10,95 @@ let PRODUCTS = [];
 let currentProduct = null;
 let currentImageIndex = 0;
 
+let touchStartX = 0;
+let touchStartY = 0;
+
 
 /* =========================================================
    DOM ELEMENTS
 ========================================================= */
 
-const loading = document.getElementById("loading");
-const errorMessage = document.getElementById("errorMessage");
-const retryButton = document.getElementById("retryButton");
-const productsGrid = document.getElementById("productsGrid");
+const loading =
+    document.getElementById("loading");
 
-const storeTitle = document.getElementById("storeTitle");
-const storeSubtitle = document.getElementById("storeSubtitle");
+const errorMessage =
+    document.getElementById("errorMessage");
 
+const retryButton =
+    document.getElementById("retryButton");
 
-/* Gallery */
+const productsGrid =
+    document.getElementById("productsGrid");
 
-const galleryModal = document.getElementById("galleryModal");
-const galleryImage = document.getElementById("galleryImage");
-const galleryTitle = document.getElementById("galleryTitle");
-const galleryDescription = document.getElementById("galleryDescription");
-const galleryCounter = document.getElementById("galleryCounter");
+const storeTitle =
+    document.getElementById("storeTitle");
 
-const galleryClose = document.getElementById("galleryClose");
-const galleryPrev = document.getElementById("galleryPrev");
-const galleryNext = document.getElementById("galleryNext");
+const storeSubtitle =
+    document.getElementById("storeSubtitle");
 
 
-/* Details */
+/* =========================================================
+   GALLERY ELEMENTS
+========================================================= */
 
-const detailsModal = document.getElementById("detailsModal");
-const detailsClose = document.getElementById("detailsClose");
+const galleryModal =
+    document.getElementById("galleryModal");
 
-const detailsCode = document.getElementById("detailsCode");
-const detailsTitle = document.getElementById("detailsTitle");
-const detailsDescription = document.getElementById("detailsDescription");
-const detailsStatus = document.getElementById("detailsStatus");
-const detailsTable = document.getElementById("detailsTable");
+const galleryImage =
+    document.getElementById("galleryImage");
 
-const telegramButton = document.getElementById("telegramButton");
-const whatsappButton = document.getElementById("whatsappButton");
-const locationButton = document.getElementById("locationButton");
+const galleryTitle =
+    document.getElementById("galleryTitle");
+
+const galleryDescription =
+    document.getElementById("galleryDescription");
+
+const galleryCounter =
+    document.getElementById("galleryCounter");
+
+const galleryClose =
+    document.getElementById("galleryClose");
+
+const galleryPrev =
+    document.getElementById("galleryPrev");
+
+const galleryNext =
+    document.getElementById("galleryNext");
+
+
+/* =========================================================
+   DETAILS ELEMENTS
+========================================================= */
+
+const detailsModal =
+    document.getElementById("detailsModal");
+
+const detailsClose =
+    document.getElementById("detailsClose");
+
+const detailsCode =
+    document.getElementById("detailsCode");
+
+const detailsTitle =
+    document.getElementById("detailsTitle");
+
+const detailsDescription =
+    document.getElementById("detailsDescription");
+
+const detailsStatus =
+    document.getElementById("detailsStatus");
+
+const detailsTable =
+    document.getElementById("detailsTable");
+
+const telegramButton =
+    document.getElementById("telegramButton");
+
+const whatsappButton =
+    document.getElementById("whatsappButton");
+
+const locationButton =
+    document.getElementById("locationButton");
 
 
 /* =========================================================
@@ -61,8 +109,11 @@ if (
     window.Telegram &&
     window.Telegram.WebApp
 ) {
+
     Telegram.WebApp.ready();
+
     Telegram.WebApp.expand();
+
 }
 
 
@@ -70,34 +121,36 @@ if (
    INITIALIZATION
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
 
 async function init() {
 
     try {
-loading.innerHTML = "مرحله 0:...";
+
         hideError();
 
         showLoading();
 
-applyStoreConfig();
+        applyStoreConfig();
 
-loading.innerHTML = "مرحله 1: شروع دریافت محصولات...";
+        await loadProducts();
 
-await loadProducts();
+        renderProducts();
 
-loading.innerHTML = "مرحله 2: محصولات دریافت شدند...";
+        hideLoading();
 
-renderProducts();
+    }
 
-loading.innerHTML = "مرحله 3: محصولات ساخته شدند...";
+    catch (error) {
 
-hideLoading();
-
-    } catch (error) {
-
-        console.error(error);
+        console.error(
+            "Initialization error:",
+            error
+        );
 
         hideLoading();
 
@@ -115,11 +168,14 @@ hideLoading();
 function applyStoreConfig() {
 
     if (
-        typeof STORE_CONFIG === "undefined"
+        typeof STORE_CONFIG ===
+        "undefined"
     ) {
+
         throw new Error(
             "فایل config.js پیدا نشد یا STORE_CONFIG تعریف نشده است."
         );
+
     }
 
 
@@ -146,42 +202,75 @@ function applyStoreConfig() {
    LOAD PRODUCTS
 ========================================================= */
 
-
 async function loadProducts() {
 
-    const productsURL = "./data/products.json?v=" + Date.now();
+    /*
+       استفاده از همان GitHub Pages
+       برای جلوگیری از مشکل CORS
+    */
+
+    const productsURL =
+        "./data/products.json?v=" +
+        Date.now();
+
 
     try {
 
-        const response = await fetch(productsURL);
+        const response =
+            await fetch(
+                productsURL,
+                {
+                    method: "GET"
+                }
+            );
+
 
         if (!response.ok) {
+
             throw new Error(
-                `HTTP ${response.status}`
+                `خطا در دریافت محصولات — HTTP ${response.status}`
             );
+
         }
 
-        const data = await response.json();
 
-        if (!Array.isArray(data)) {
+        const data =
+            await response.json();
+
+
+        if (
+            !Array.isArray(data)
+        ) {
+
             throw new Error(
-                "products.json آرایه نیست."
+                "ساختار products.json صحیح نیست."
             );
+
         }
+
+
+        if (
+            data.length === 0
+        ) {
+
+            throw new Error(
+                "هیچ محصولی در products.json وجود ندارد."
+            );
+
+        }
+
 
         PRODUCTS = data;
 
-    } catch (error) {
+    }
 
-        throw new Error(
-            "خطا در دریافت محصولات: " + error.message
-        );
+    catch (error) {
+
+        throw error;
 
     }
 
 }
-
-
 
 
 /* =========================================================
@@ -190,14 +279,18 @@ async function loadProducts() {
 
 function showLoading() {
 
-    loading.classList.remove("hidden");
+    loading.classList.remove(
+        "hidden"
+    );
 
 }
 
 
 function hideLoading() {
 
-    loading.classList.add("hidden");
+    loading.classList.add(
+        "hidden"
+    );
 
 }
 
@@ -208,7 +301,9 @@ function hideLoading() {
 
 function showError(error) {
 
-    errorMessage.classList.remove("hidden");
+    errorMessage.classList.remove(
+        "hidden"
+    );
 
 
     const errorText =
@@ -221,7 +316,10 @@ function showError(error) {
             اطلاعات محصولات دریافت نشد.
             <br><br>
             <small>
-                ${escapeHTML(error.message)}
+                ${escapeHTML(
+                    error?.message ||
+                    "خطای نامشخص"
+                )}
             </small>
         `;
 
@@ -232,15 +330,25 @@ function showError(error) {
 
 function hideError() {
 
-    errorMessage.classList.add("hidden");
+    errorMessage.classList.add(
+        "hidden"
+    );
 
 }
 
 
-retryButton.addEventListener(
-    "click",
-    init
-);
+/* =========================================================
+   RETRY
+========================================================= */
+
+if (retryButton) {
+
+    retryButton.addEventListener(
+        "click",
+        init
+    );
+
+}
 
 
 /* =========================================================
@@ -252,7 +360,9 @@ function renderProducts() {
     productsGrid.innerHTML = "";
 
 
-    if (!PRODUCTS.length) {
+    if (
+        !PRODUCTS.length
+    ) {
 
         productsGrid.innerHTML = `
             <div class="empty-products">
@@ -269,9 +379,13 @@ function renderProducts() {
         product => {
 
             const card =
-                createProductCard(product);
+                createProductCard(
+                    product
+                );
 
-            productsGrid.appendChild(card);
+            productsGrid.appendChild(
+                card
+            );
 
         }
     );
@@ -286,50 +400,93 @@ function renderProducts() {
 function createProductCard(product) {
 
     const card =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
     card.className =
         "product-card";
 
 
-    /* Image */
+    /* -----------------------------------------------------
+       IMAGE WRAPPER
+    ----------------------------------------------------- */
 
     const imageWrapper =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     imageWrapper.className =
         "product-image-wrapper";
 
 
+    /* -----------------------------------------------------
+       MAIN IMAGE
+    ----------------------------------------------------- */
+
     const image =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
     image.className =
         "product-image";
 
-    image.src =
-        product.images[0];
+
+    if (
+        Array.isArray(
+            product.images
+        ) &&
+        product.images.length
+    ) {
+
+        image.src =
+            product.images[0];
+
+    }
+
 
     image.alt =
-        product.name;
+        product.name || "";
+
+
+    /*
+       تصاویر کارت‌ها lazy load می‌شوند
+    */
 
     image.loading =
         "lazy";
 
+    image.decoding =
+        "async";
+
 
     image.addEventListener(
         "click",
-        () => openGallery(product)
+        () => {
+
+            openGallery(
+                product
+            );
+
+        }
     );
 
 
-    imageWrapper.appendChild(image);
+    imageWrapper.appendChild(
+        image
+    );
 
 
-    /* Status */
+    /* -----------------------------------------------------
+       STATUS
+    ----------------------------------------------------- */
 
     const statusHTML =
-        getProductStatusHTML(product);
+        getProductStatusHTML(
+            product
+        );
 
 
     if (statusHTML) {
@@ -342,46 +499,70 @@ function createProductCard(product) {
     }
 
 
-    /* Body */
+    /* -----------------------------------------------------
+       BODY
+    ----------------------------------------------------- */
 
     const body =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     body.className =
         "product-card-body";
 
 
+    /* -----------------------------------------------------
+       TITLE
+    ----------------------------------------------------- */
+
     const title =
-        document.createElement("h2");
+        document.createElement(
+            "h2"
+        );
 
     title.className =
         "product-title";
 
     title.textContent =
-        product.name;
+        product.name || "";
 
+
+    /* -----------------------------------------------------
+       DESCRIPTION
+    ----------------------------------------------------- */
 
     const description =
-        document.createElement("p");
+        document.createElement(
+            "p"
+        );
 
     description.className =
         "product-description";
 
     description.textContent =
-        product.description;
+        product.description || "";
 
 
-    /* Actions */
+    /* -----------------------------------------------------
+       ACTIONS
+    ----------------------------------------------------- */
 
     const actions =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     actions.className =
         "product-actions";
 
 
+    /* Gallery Button */
+
     const galleryButton =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     galleryButton.type =
         "button";
@@ -395,12 +576,22 @@ function createProductCard(product) {
 
     galleryButton.addEventListener(
         "click",
-        () => openGallery(product)
+        () => {
+
+            openGallery(
+                product
+            );
+
+        }
     );
 
 
+    /* Details Button */
+
     const detailsButton =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     detailsButton.type =
         "button";
@@ -414,7 +605,13 @@ function createProductCard(product) {
 
     detailsButton.addEventListener(
         "click",
-        () => openDetails(product)
+        () => {
+
+            openDetails(
+                product
+            );
+
+        }
     );
 
 
@@ -427,11 +624,17 @@ function createProductCard(product) {
     );
 
 
-    body.appendChild(title);
+    body.appendChild(
+        title
+    );
 
-    body.appendChild(description);
+    body.appendChild(
+        description
+    );
 
-    body.appendChild(actions);
+    body.appendChild(
+        actions
+    );
 
 
     card.appendChild(
@@ -449,7 +652,7 @@ function createProductCard(product) {
 
 
 /* =========================================================
-   STATUS
+   PRODUCT STATUS
 ========================================================= */
 
 function getProductStatusHTML(product) {
@@ -496,10 +699,14 @@ function openGallery(product) {
 
     if (
         !product ||
-        !Array.isArray(product.images) ||
+        !Array.isArray(
+            product.images
+        ) ||
         product.images.length === 0
     ) {
+
         return;
+
     }
 
 
@@ -511,10 +718,11 @@ function openGallery(product) {
 
 
     galleryTitle.textContent =
-        product.name;
+        product.name || "";
+
 
     galleryDescription.textContent =
-        product.description;
+        product.description || "";
 
 
     updateGallery();
@@ -524,22 +732,29 @@ function openGallery(product) {
         "hidden"
     );
 
+
     document.body.classList.add(
         "modal-open"
     );
 
 
-   // preloadGalleryImages(
-      //  product
-   // );
+    updateGalleryButtons();
 
 }
 
 
+/* =========================================================
+   UPDATE GALLERY
+========================================================= */
+
 function updateGallery() {
 
-    if (!currentProduct) {
+    if (
+        !currentProduct
+    ) {
+
         return;
+
     }
 
 
@@ -547,8 +762,20 @@ function updateGallery() {
         currentProduct.images;
 
 
+    if (
+        !Array.isArray(images) ||
+        images.length === 0
+    ) {
+
+        return;
+
+    }
+
+
     const imageURL =
-        images[currentImageIndex];
+        images[
+            currentImageIndex
+        ];
 
 
     galleryImage.src =
@@ -562,26 +789,706 @@ function updateGallery() {
     galleryCounter.textContent =
         `${currentImageIndex + 1} / ${images.length}`;
 
+
+    updateGalleryButtons();
+
 }
 
 
-function preloadGalleryImages(product) {
+/* =========================================================
+   GALLERY BUTTON STATE
+========================================================= */
 
-    if (!product.images) {
+function updateGalleryButtons() {
+
+    if (
+        !currentProduct ||
+        !Array.isArray(
+            currentProduct.images
+        )
+    ) {
+
         return;
+
     }
 
 
-    product.images.forEach(
-        url => {
+    const total =
+        currentProduct.images.length;
 
-            const img =
-                new Image();
 
-            img.src =
-                url;
+    /*
+       اگر فقط یک تصویر وجود دارد،
+       دکمه‌های قبلی و بعدی غیرفعال می‌شوند.
+    */
+
+    if (
+        total <= 1
+    ) {
+
+        galleryPrev.disabled =
+            true;
+
+        galleryNext.disabled =
+            true;
+
+    }
+
+    else {
+
+        galleryPrev.disabled =
+            false;
+
+        galleryNext.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT IMAGE
+========================================================= */
+
+function showNextImage() {
+
+    if (
+        !currentProduct
+    ) {
+
+        return;
+
+    }
+
+
+    const images =
+        currentProduct.images;
+
+
+    if (
+        !Array.isArray(images) ||
+        images.length <= 1
+    ) {
+
+        return;
+
+    }
+
+
+    currentImageIndex++;
+
+
+    if (
+        currentImageIndex >=
+        images.length
+    ) {
+
+        currentImageIndex =
+            0;
+
+    }
+
+
+    updateGallery();
+
+}
+
+
+/* =========================================================
+   PREVIOUS IMAGE
+========================================================= */
+
+function showPreviousImage() {
+
+    if (
+        !currentProduct
+    ) {
+
+        return;
+
+    }
+
+
+    const images =
+        currentProduct.images;
+
+
+    if (
+        !Array.isArray(images) ||
+        images.length <= 1
+    ) {
+
+        return;
+
+    }
+
+
+    currentImageIndex--;
+
+
+    if (
+        currentImageIndex < 0
+    ) {
+
+        currentImageIndex =
+            images.length - 1;
+
+    }
+
+
+    updateGallery();
+
+}
+
+
+/* =========================================================
+   CLOSE GALLERY
+========================================================= */
+
+function closeGallery() {
+
+    galleryModal.classList.add(
+        "hidden"
+    );
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
+    galleryImage.src =
+        "";
+
+
+    currentProduct =
+        null;
+
+
+    currentImageIndex =
+        0;
+
+}
+
+
+/* =========================================================
+   GALLERY BUTTON EVENTS
+========================================================= */
+
+galleryClose.addEventListener(
+    "click",
+    closeGallery
+);
+
+
+galleryPrev.addEventListener(
+    "click",
+    showPreviousImage
+);
+
+
+galleryNext.addEventListener(
+    "click",
+    showNextImage
+);
+
+
+/* =========================================================
+   CLOSE GALLERY BY CLICKING OUTSIDE
+========================================================= */
+
+galleryModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            galleryModal
+        ) {
+
+            closeGallery();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOUCH SWIPE
+========================================================= */
+
+galleryImage.addEventListener(
+    "touchstart",
+    function (event) {
+
+        if (
+            !event.touches ||
+            !event.touches.length
+        ) {
+
+            return;
+
+        }
+
+
+        touchStartX =
+            event.touches[0].clientX;
+
+        touchStartY =
+            event.touches[0].clientY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+galleryImage.addEventListener(
+    "touchend",
+    function (event) {
+
+        if (
+            !event.changedTouches ||
+            !event.changedTouches.length
+        ) {
+
+            return;
+
+        }
+
+
+        const touchEndX =
+            event.changedTouches[0].clientX;
+
+        const touchEndY =
+            event.changedTouches[0].clientY;
+
+
+        const deltaX =
+            touchEndX -
+            touchStartX;
+
+        const deltaY =
+            touchEndY -
+            touchStartY;
+
+
+        /*
+           فقط حرکات افقی را به عنوان Swipe قبول کن
+        */
+
+        if (
+            Math.abs(deltaX) <
+            50
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+           اگر حرکت بیشتر عمودی باشد،
+           Swipe محسوب نمی‌شود.
+        */
+
+        if (
+            Math.abs(deltaY) >
+            Math.abs(deltaX)
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            deltaX < 0
+        ) {
+
+            /*
+               Swipe به چپ
+               → تصویر بعدی
+            */
+
+            showNextImage();
+
+        }
+
+        else {
+
+            /*
+               Swipe به راست
+               → تصویر قبلی
+            */
+
+            showPreviousImage();
+
+        }
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD CONTROLS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        /*
+           Gallery
+        */
+
+        if (
+            !galleryModal.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeGallery();
+
+                return;
+
+            }
+
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+
+                /*
+                   در RTL:
+                   Left → تصویر بعدی
+                */
+
+                showNextImage();
+
+                return;
+
+            }
+
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                /*
+                   در RTL:
+                   Right → تصویر قبلی
+                */
+
+                showPreviousImage();
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+           Details
+        */
+
+        if (
+            !detailsModal.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeDetails();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+function openDetails(product) {
+
+    if (
+        !product
+    ) {
+
+        return;
+
+    }
+
+
+    detailsCode.textContent =
+        product.id
+        ? `کد ${product.id}`
+        : "";
+
+
+    detailsTitle.textContent =
+        product.name || "";
+
+
+    detailsDescription.textContent =
+        product.description || "";
+
+
+    updateDetailsStatus(
+        product
+    );
+
+
+    renderDetailsTable(
+        product
+    );
+
+
+    detailsModal.classList.remove(
+        "hidden"
+    );
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================================
+   DETAILS STATUS
+========================================================= */
+
+function updateDetailsStatus(product) {
+
+    detailsStatus.innerHTML =
+        "";
+
+
+    if (
+        product.status ===
+        "out_of_stock"
+    ) {
+
+        detailsStatus.innerHTML = `
+            <span class="details-status-out">
+                اتمام موجودی
+            </span>
+        `;
+
+        return;
+
+    }
+
+
+    if (
+        product.status ===
+        "restocking"
+    ) {
+
+        detailsStatus.innerHTML = `
+            <span class="details-status-restocking">
+                شارژ مجدد
+            </span>
+        `;
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   DETAILS TABLE
+========================================================= */
+
+function renderDetailsTable(product) {
+
+    detailsTable.innerHTML =
+        "";
+
+
+    if (
+        !product.details ||
+        typeof product.details !==
+        "object"
+    ) {
+
+        return;
+
+    }
+
+
+    const tbody =
+        document.createElement(
+            "tbody"
+        );
+
+
+    Object.entries(
+        product.details
+    ).forEach(
+        ([key, value]) => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const keyCell =
+                document.createElement(
+                    "th"
+                );
+
+            keyCell.textContent =
+                key;
+
+
+            const valueCell =
+                document.createElement(
+                    "td"
+                );
+
+            valueCell.textContent =
+                value;
+
+
+            row.appendChild(
+                keyCell
+            );
+
+            row.appendChild(
+                valueCell
+            );
+
+
+            tbody.appendChild(
+                row
+            );
 
         }
     );
+
+
+    detailsTable.appendChild(
+        tbody
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE DETAILS
+========================================================= */
+
+function closeDetails() {
+
+    detailsModal.classList.add(
+        "hidden"
+    );
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
+    detailsCode.textContent =
+        "";
+
+    detailsTitle.textContent =
+        "";
+
+    detailsDescription.textContent =
+        "";
+
+    detailsStatus.innerHTML =
+        "";
+
+    detailsTable.innerHTML =
+        "";
+
+}
+
+
+/* =========================================================
+   DETAILS EVENTS
+========================================================= */
+
+detailsClose.addEventListener(
+    "click",
+    closeDetails
+);
+
+
+detailsModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            detailsModal
+        ) {
+
+            closeDetails();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
