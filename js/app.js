@@ -144,8 +144,7 @@ function applyStoreConfig() {
 async function loadProducts() {
 
     const productsURL =
-        "https://raw.githubusercontent.com/ehsankhiabanifard/telegram-mini-app/main/data/products.json";
-
+        "./data/products.json?v=" + Date.now();
 
     /*
        جلوگیری از گیر کردن بی‌نهایت روی Loading
