@@ -1258,12 +1258,11 @@ detailsProductImage.alt = product.name || "";
         : "";
 
 
-    detailsTitle.textContent =
-        product.name || "";
+    // مدل
+    detailsTitle.textContent = details["مدل"] || "";
 
-
-    detailsDescription.textContent =
-        product.description || "";
+    // استایل
+    detailsDescription.textContent = details["استایل"] || "";
 
 
     updateDetailsStatus(
