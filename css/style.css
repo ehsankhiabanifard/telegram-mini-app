@@ -1920,6 +1920,23 @@ img {
     }
 }
 
+.details-product-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.details-product-image {
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    display: block;
+}
 
 
 
