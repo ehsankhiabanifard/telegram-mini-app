@@ -635,7 +635,3 @@ function preloadGalleryImages(product) {
     );
 
 }
-
-
-function ne
-
