@@ -1241,7 +1241,8 @@ function openDetails(product) {
 
     }
 
-
+detailsProductImage.src = product.images?.[0] || "";
+detailsProductImage.alt = product.name || "";
     detailsCode.textContent =
         product.id
         ? `کد ${product.id}`
