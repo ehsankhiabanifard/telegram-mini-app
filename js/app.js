@@ -571,7 +571,7 @@ function createProductCard(product) {
         "product-button gallery-button";
 
     galleryButton.textContent =
-        "🖼 مشاهده تصاویر";
+        "مشاهده تصاویر";
 
 
     galleryButton.addEventListener(
@@ -600,7 +600,7 @@ function createProductCard(product) {
         "product-button details-button";
 
     detailsButton.textContent =
-        "✦ جزئیات";
+       "جزئیات محصول";
 
 
     detailsButton.addEventListener(
