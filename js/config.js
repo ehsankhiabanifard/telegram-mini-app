@@ -44,6 +44,22 @@ const STORE_CONFIG = {
         }
 
     }
-
+footer: {
+    address: "تهران، ...",
+    phone: "021-12345678",
+    mobile: "0912-...",
+    instagram: {
+        title: "اینستاگرام",
+        url: "https://instagram.com/..."
+    },
+    rubika: {
+        title: "روبیکا",
+        url: "https://rubika.ir/..."
+    },
+    telegram: {
+        title: "تلگرام",
+        url: "https://t.me/..."
+    }
+}
 };
 
