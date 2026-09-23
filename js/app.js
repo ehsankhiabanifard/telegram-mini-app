@@ -1517,10 +1517,9 @@ function renderFooter() {
             </div>
     `;
 
-
     /* =========================
        اطلاعات تماس
-       ========================= */
+    ========================= */
 
     const hasContactInfo =
         footer.address ||
@@ -1538,7 +1537,19 @@ function renderFooter() {
         if (footer.address) {
             html += `
                 <div class="footer-contact-item">
-                    <span class="footer-contact-icon">⌖</span>
+                    <span class="footer-contact-icon address-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"/>
+                            <circle cx="12" cy="9" r="2.3"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"/>
+                        </svg>
+                    </span>
+
                     <span>${escapeHTML(footer.address)}</span>
                 </div>
             `;
@@ -1550,7 +1561,18 @@ function renderFooter() {
                     class="footer-contact-item footer-link"
                     href="tel:${escapeHTML(footer.phone)}"
                 >
-                    <span class="footer-contact-icon">☎</span>
+                    <span class="footer-contact-icon phone-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M6.6 3.5 9 3l2 4.8-2.1 1.7a14.5 14.5 0 0 0 5.6 5.6l1.7-2.1 4.8 2 .-0.5 2.4c-.3 1.4-1.6 2.4-3 2.3C10.7 19 5 13.3 4.3 6.5c-.2-1.4.8-2.7 2.3-3Z"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </span>
+
                     <span>${escapeHTML(footer.phone)}</span>
                 </a>
             `;
@@ -1562,7 +1584,18 @@ function renderFooter() {
                     class="footer-contact-item footer-link"
                     href="tel:${escapeHTML(footer.mobile)}"
                 >
-                    <span class="footer-contact-icon">📱</span>
+                    <span class="footer-contact-icon mobile-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="7" y="2.5" width="10" height="19"
+                                rx="2"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"/>
+                            <circle cx="12" cy="18.3" r=".8"
+                                fill="currentColor"/>
+                        </svg>
+                    </span>
+
                     <span>${escapeHTML(footer.mobile)}</span>
                 </a>
             `;
@@ -1573,58 +1606,180 @@ function renderFooter() {
         `;
     }
 
-
     /* =========================
        شبکه‌های اجتماعی
-       ========================= */
+    ========================= */
 
     const socialItems = [
-        footer.instagram,
-        footer.rubika,
-        footer.telegram,
-        footer.whatsapp
-    ].filter(item => item && item.url);
+        footer.instagram
+            ? { ...footer.instagram, type: "instagram" }
+            : null,
 
+        footer.rubika
+            ? { ...footer.rubika, type: "rubika" }
+            : null,
+
+        footer.telegram
+            ? { ...footer.telegram, type: "telegram" }
+            : null,
+
+        footer.whatsapp
+            ? { ...footer.whatsapp, type: "whatsapp" }
+            : null
+    ].filter(item => item && item.url);
 
     if (socialItems.length) {
 
         html += `
             <div class="footer-social">
 
-                <h3>ما را دنبال کنید</h3>
+                <h3>ارتباط با ما</h3>
 
                 <div class="footer-social-links">
         `;
 
         socialItems.forEach(item => {
 
-            let icon = "↗";
+            let icon = "";
+            let iconClass = "";
 
-            if (item === footer.instagram) {
-                icon = "◎";
+            /* Instagram */
+
+            if (item.type === "instagram") {
+
+                iconClass = "social-instagram";
+
+                icon = `
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect
+                            x="3"
+                            y="3"
+                            width="18"
+                            height="18"
+                            rx="5"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="4"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+
+                        <circle
+                            cx="17.4"
+                            cy="6.7"
+                            r="1.2"
+                            fill="currentColor"
+                        />
+                    </svg>
+                `;
             }
 
-            if (item === footer.rubika) {
-                icon = "◆";
+            /* Telegram */
+
+            if (item.type === "telegram") {
+
+                iconClass = "social-telegram";
+
+                icon = `
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M21 4 3.8 10.6c-1.2.5-1.2 1.3-.2 1.6l4.4 1.4 1.7 5.3c.2.7.4.7.8.3l2.5-2.4 4.6 3.4c.8.5 1.4.2 1.6-.8L22 5.3C22.2 4.1 21.7 3.6 21 4Z"
+                            fill="currentColor"
+                        />
+
+                        <path
+                            d="m8.1 13.3 9.8-6.2-7.8 7.2-.3 3.1"
+                            fill="none"
+                            stroke="#0B0B0D"
+                            stroke-width="1"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                `;
             }
 
-            if (item === footer.telegram) {
-                icon = "✈";
+            /* WhatsApp */
+
+            if (item.type === "whatsapp") {
+
+                iconClass = "social-whatsapp";
+
+                icon = `
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path
+                            d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.5-1.2A9 9 0 1 0 12 3Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+
+                        <path
+                            d="M8.5 8.5c.3-.5.6-.5 1-.4l1 .8c.3.2.3.5.2.8l-.4.8c.8 1.3 1.8 2.1 3.2 2.6l.7-.7c.2-.2.5-.2.8-.1l1 .5c.4.2.5.5.3.9-.3.8-1 1.3-1.8 1.3-3.8-.1-7-3.3-7.1-7.1 0-.6.4-1.1 1.1-1.4Z"
+                            fill="currentColor"
+                        />
+
+                    </svg>
+                `;
             }
 
-            if (item === footer.whatsapp) {
-                icon = "◉";
+            /* Rubika */
+
+            if (item.type === "rubika") {
+
+                iconClass = "social-rubika";
+
+                icon = `
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path
+                            d="M12 2.8 20.8 8v8L12 21.2 3.2 16V8L12 2.8Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="m8 9 4 6 4-6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+                `;
             }
 
             html += `
                 <a
-                    class="footer-social-link"
+                    class="footer-social-link ${iconClass}"
                     href="${escapeHTML(item.url)}"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="${escapeHTML(item.title || "")}"
                 >
-                    <span class="footer-social-icon">${icon}</span>
-                    <span>${escapeHTML(item.title || "")}</span>
+
+                    <span class="footer-social-icon">
+                        ${icon}
+                    </span>
+
+                    <span class="footer-social-text">
+                        ${escapeHTML(item.title || "")}
+                    </span>
+
+                    <span class="footer-social-arrow">←</span>
+
                 </a>
             `;
         });
@@ -1635,14 +1790,23 @@ function renderFooter() {
         `;
     }
 
-
     html += `
         </div>
 
         <div class="footer-bottom">
-            <span>© ${new Date().getFullYear()}</span>
-            <span>${escapeHTML(STORE_CONFIG.title || "")}</span>
-            <span>تمامی حقوق محفوظ است</span>
+
+            <span>
+                © ${new Date().getFullYear()}
+            </span>
+
+            <span>
+                ${escapeHTML(STORE_CONFIG.title || "")}
+            </span>
+
+            <span>
+                تمامی حقوق محفوظ است
+            </span>
+
         </div>
     `;
 
