@@ -1242,48 +1242,42 @@ document.addEventListener(
 
 function openDetails(product) {
 
-    if (
-        !product
-    ) {
-
+    if (!product) {
         return;
-
     }
 
-detailsProductImage.src = product.images?.[0] || "";
-detailsProductImage.alt = product.name || "";
-    detailsCode.textContent =
-        product.id
-        ? `کد ${product.id}`
-        : "";
+    const details = product.details || {};
 
+    // تصویر اصلی محصول
+    detailsProductImage.src =
+        product.images?.[0] || "";
+
+    detailsProductImage.alt =
+        details["مدل"] || "";
+
+    // کد محصول
+    // کد طلایی باید در HTML وجود داشته باشد
+    // پس فعلاً از detailsCode استفاده نمی‌کنیم
 
     // مدل
-    detailsTitle.textContent = details["مدل"] || "";
+    detailsTitle.textContent =
+        details["مدل"] || "";
 
     // استایل
-    detailsDescription.textContent = details["استایل"] || "";
+    detailsDescription.textContent =
+        details["استایل"] || "";
 
+    updateDetailsStatus(product);
 
-    updateDetailsStatus(
-        product
-    );
-
-
-    renderDetailsTable(
-        product
-    );
-
+    renderDetailsTable(product);
 
     detailsModal.classList.remove(
         "hidden"
     );
 
-
     document.body.classList.add(
         "modal-open"
     );
-
 }
 
 
