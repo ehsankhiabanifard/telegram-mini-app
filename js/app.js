@@ -35,7 +35,7 @@ const storeTitle =
 
 const storeSubtitle =
     document.getElementById("storeSubtitle");
-
+const storeFooter = document.getElementById("storeFooter");
 
 /* =========================================================
    GALLERY ELEMENTS
