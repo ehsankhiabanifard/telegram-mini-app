@@ -1518,271 +1518,409 @@ img {
     }
 }
 /* =========================================================
-   STORE FOOTER
-   ========================================================= */
+   FOOTER
+========================================================= */
 
 .store-footer {
-    margin-top: 20px;
-
+    margin-top: 70px;
     background:
         linear-gradient(
             180deg,
-            rgba(255,255,255,0.015),
-            rgba(255,255,255,0.035)
+            rgba(21, 21, 25, 0.95),
+            rgba(11, 11, 13, 1)
         );
-
-    border-top: 1px solid var(--border-soft);
+    border-top: 1px solid #292930;
+    position: relative;
+    overflow: hidden;
 }
+
+/* subtle luxury line */
+
+.store-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 180px;
+    height: 1px;
+    transform: translateX(-50%);
+    background: #C8A96B;
+    opacity: 0.8;
+}
+
+/* Main footer */
 
 .footer-inner {
-    width: min(1100px, calc(100% - 30px));
-
+    width: min(1200px, calc(100% - 32px));
     margin: 0 auto;
-
-    padding: 42px 0 35px;
+    padding: 55px 0 40px;
 
     display: grid;
-
     grid-template-columns:
-        1.2fr
-        1fr
-        1fr;
+        minmax(220px, 1fr)
+        minmax(220px, 1fr)
+        minmax(260px, 1.2fr);
 
-    gap: 35px;
+    gap: 45px;
 }
 
-
-/* برند */
+/* Brand */
 
 .footer-brand h2 {
-    margin: 0 0 8px;
+    margin: 0 0 12px;
 
-    color: var(--text);
+    color: #C8A96B;
 
-    font-size: 27px;
-}
-
-.footer-brand h2::after {
-    content: "✦";
-
-    display: block;
-
-    margin-top: 5px;
-
-    color: var(--accent);
-
-    font-size: 11px;
+    font-size: 1.65rem;
+    font-weight: 700;
 }
 
 .footer-brand p {
-    max-width: 280px;
+    margin: 0;
 
-    margin: 8px 0 0;
+    color: #9999A3;
 
-    color: var(--muted);
-
-    font-size: 16px;
-
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 2;
 }
 
-
-/* عنوان بخش‌ها */
+/* Section titles */
 
 .footer-contact h3,
 .footer-social h3 {
-    margin: 0 0 14px;
+    margin: 0 0 20px;
 
-    color: var(--accent-light);
+    color: #F5F5F5;
 
-    font-size: 19px;
-
+    font-size: 1.15rem;
     font-weight: 600;
+
+    position: relative;
 }
 
+.footer-contact h3::after,
+.footer-social h3::after {
+    content: "";
 
-/* اطلاعات تماس */
+    display: block;
 
-.footer-contact {
-    display: flex;
+    width: 34px;
+    height: 2px;
 
-    flex-direction: column;
+    margin-top: 9px;
 
-    align-items: flex-start;
-
-    gap: 9px;
+    background: #C8A96B;
 }
+
+/* Contact items */
 
 .footer-contact-item {
     display: flex;
-
     align-items: center;
+    gap: 12px;
 
-    gap: 9px;
+    min-height: 42px;
 
-    color: var(--text-soft);
-
-    font-size: 16px;
-
-    line-height: 1.6;
+    color: #B8B8C0;
 
     text-decoration: none;
-}
 
-.footer-contact-icon {
-    width: 28px;
+    font-size: 1rem;
 
-    text-align: center;
-
-    color: var(--accent);
-
-    font-family: Arial, sans-serif;
-
-    font-size: 16px;
-}
-
-.footer-link {
     transition:
-        color var(--transition),
-        transform var(--transition);
+        color 0.25s ease,
+        transform 0.25s ease;
 }
 
 .footer-link:hover {
-    color: var(--accent-light);
-
-    transform: translateX(-3px);
+    color: #F5F5F5;
+    transform: translateX(-4px);
 }
 
+.footer-contact-icon {
+    width: 30px;
+    height: 30px;
 
-/* شبکه‌های اجتماعی */
-
-.footer-social-links {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 9px;
-}
-
-.footer-social-link {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    padding: 7px 12px;
-
-    color: var(--text-soft);
-
-    background:
-        rgba(255,255,255,0.025);
-
-    border: 1px solid var(--border);
-
-    border-radius: 9px;
-
-    text-decoration: none;
-
-    font-size: 16px;
-
-    transition:
-        color var(--transition),
-        background var(--transition),
-        border-color var(--transition),
-        transform var(--transition);
-}
-
-.footer-social-link:hover {
-    color: var(--accent-light);
-
-    background:
-        rgba(200,169,107,0.07);
-
-    border-color:
-        rgba(200,169,107,0.3);
-
-    transform: translateY(-2px);
-}
-
-.footer-social-icon {
-    color: var(--accent);
-
-    font-family: Arial, sans-serif;
-
-    font-size: 15px;
-}
-
-
-/* خط پایانی */
-
-.footer-bottom {
-    width: min(1100px, calc(100% - 30px));
-
-    margin: 0 auto;
-
-    padding: 17px 0;
+    flex: 0 0 30px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    flex-wrap: wrap;
+    color: #C8A96B;
+}
 
-    gap: 8px 18px;
+.footer-contact-icon svg {
+    width: 21px;
+    height: 21px;
+}
 
-    border-top: 1px solid var(--border-soft);
+/* Social links */
 
-    color: #777780;
+.footer-social-links {
+    display: grid;
 
-    font-size: 14px;
+    grid-template-columns:
+        repeat(2, minmax(130px, 1fr));
+
+    gap: 11px;
+}
+
+.footer-social-link {
+    min-height: 48px;
+
+    padding: 7px 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid #292930;
+
+    border-radius: 12px;
+
+    background: #151519;
+
+    color: #DADAE0;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.footer-social-link:hover {
+    transform: translateY(-3px);
+
+    background: #1C1C21;
+}
+
+/* Social logo */
+
+.footer-social-icon {
+    width: 31px;
+    height: 31px;
+
+    flex: 0 0 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.footer-social-icon svg {
+    width: 21px;
+    height: 21px;
+
+    display: block;
+}
+
+.footer-social-text {
+    flex: 1;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.footer-social-arrow {
+    color: #666670;
+
+    font-size: 0.9rem;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.footer-social-link:hover .footer-social-arrow {
+    color: #C8A96B;
+    transform: translateX(-3px);
+}
+
+.footer-social-link:hover .footer-social-icon {
+    transform: scale(1.08);
+}
+
+/* =========================================================
+   INSTAGRAM
+========================================================= */
+
+.social-instagram .footer-social-icon {
+    color: #E1306C;
+
+    background: rgba(225, 48, 108, 0.10);
+}
+
+.social-instagram:hover {
+    border-color: rgba(225, 48, 108, 0.45);
+
+    box-shadow:
+        0 8px 25px rgba(225, 48, 108, 0.08);
+}
+
+/* =========================================================
+   TELEGRAM
+========================================================= */
+
+.social-telegram .footer-social-icon {
+    color: #229ED9;
+
+    background: rgba(34, 158, 217, 0.10);
+}
+
+.social-telegram:hover {
+    border-color: rgba(34, 158, 217, 0.45);
+
+    box-shadow:
+        0 8px 25px rgba(34, 158, 217, 0.08);
+}
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+.social-whatsapp .footer-social-icon {
+    color: #25D366;
+
+    background: rgba(37, 211, 102, 0.10);
+}
+
+.social-whatsapp:hover {
+    border-color: rgba(37, 211, 102, 0.45);
+
+    box-shadow:
+        0 8px 25px rgba(37, 211, 102, 0.08);
+}
+
+/* =========================================================
+   RUBIKA
+========================================================= */
+
+.social-rubika .footer-social-icon {
+    color: #6C63FF;
+
+    background: rgba(108, 99, 255, 0.10);
+}
+
+.social-rubika:hover {
+    border-color: rgba(108, 99, 255, 0.45);
+
+    box-shadow:
+        0 8px 25px rgba(108, 99, 255, 0.08);
+}
+
+/* =========================================================
+   FOOTER BOTTOM
+========================================================= */
+
+.footer-bottom {
+    width: min(1200px, calc(100% - 32px));
+
+    margin: 0 auto;
+
+    padding: 20px 0 25px;
+
+    border-top: 1px solid #24242A;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+
+    color: #666670;
+
+    font-size: 0.85rem;
 
     text-align: center;
 }
 
+.footer-bottom span:nth-child(2) {
+    color: #8A8A94;
+}
 
-/* موبایل */
+.footer-bottom span:not(:last-child)::after {
+    content: "•";
 
-@media (max-width: 700px) {
+    margin-right: 14px;
+
+    color: #3A3A42;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 899px) {
 
     .footer-inner {
-        width: calc(100% - 25px);
+        grid-template-columns: 1fr 1fr;
 
-        padding: 32px 0 28px;
-
-        grid-template-columns: 1fr;
-
-        gap: 26px;
-
-        text-align: center;
+        gap: 35px;
     }
 
     .footer-brand {
-        display: flex;
+        grid-column: 1 / -1;
+    }
+}
 
-        flex-direction: column;
+@media (max-width: 600px) {
 
-        align-items: center;
+    .store-footer {
+        margin-top: 50px;
     }
 
-    .footer-brand p {
-        max-width: 330px;
+    .footer-inner {
+        width: min(100% - 28px, 500px);
+
+        padding: 42px 0 30px;
+
+        grid-template-columns: 1fr;
+
+        gap: 32px;
     }
 
-    .footer-contact {
-        align-items: center;
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-brand h2 {
+        font-size: 1.45rem;
     }
 
     .footer-social-links {
-        justify-content: center;
+        grid-template-columns: 1fr 1fr;
     }
 
     .footer-bottom {
-        width: calc(100% - 25px);
+        width: min(100% - 28px, 500px);
 
-        padding: 15px 0;
+        flex-wrap: wrap;
 
-        font-size: 13px;
+        line-height: 1.8;
+
+        gap: 4px 10px;
     }
+}
+
+@media (max-width: 390px) {
+
+    .footer-social-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
 }
