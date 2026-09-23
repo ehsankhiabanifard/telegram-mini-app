@@ -468,84 +468,78 @@ img {
 
 .product-actions {
     display: flex;
-
     flex-direction: column;
-
-    gap: 8px;
+    gap: 9px;
+    margin-top: 14px;
 }
 
 .product-button {
     width: 100%;
+    min-height: 44px;
 
-    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    padding: 8px 12px;
+    padding: 8px 14px;
 
     border-radius: 11px;
+    border: 1px solid var(--border);
+
+    font-family: "Markazi Text", serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    letter-spacing: 0;
 
     cursor: pointer;
-
-    font-size: 17px;
-    font-weight: 500;
-
     transition:
-        transform var(--transition),
-        background var(--transition),
-        border-color var(--transition),
-        color var(--transition);
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
-.product-button:active {
-    transform: scale(0.97);
-}
-
-
-/* Gallery button */
-
+/* مشاهده تصاویر */
 .gallery-button {
-    color: #151515;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--accent-light),
-            var(--accent)
-        );
-
-    box-shadow:
-        0 5px 18px rgba(200, 169, 107, 0.12);
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: #303038;
 }
 
 .gallery-button:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #ead3a1,
-            var(--accent-light)
-        );
-
+    background: #24242A;
+    border-color: #4A4A52;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
     transform: translateY(-1px);
 }
 
-
-/* Details button */
-
+/* جزئیات */
 .details-button {
-    color: var(--text-soft);
-
-    background: transparent;
-
-    border: 1px solid var(--border);
+    background: rgba(200, 169, 107, 0.09);
+    color: var(--accent);
+    border-color: rgba(200, 169, 107, 0.35);
 }
 
 .details-button:hover {
-    color: var(--accent-light);
+    background: rgba(200, 169, 107, 0.15);
+    border-color: rgba(200, 169, 107, 0.65);
+    box-shadow: 0 4px 14px rgba(200, 169, 107, 0.10);
+    transform: translateY(-1px);
+}
 
-    border-color:
-        rgba(200, 169, 107, 0.45);
+.product-button:active {
+    transform: translateY(0) scale(0.98);
+}
 
-    background:
-        rgba(200, 169, 107, 0.06);
+/* جلوگیری از ظاهر متفاوت فونت ایموجی و متن */
+.gallery-button,
+.details-button {
+    font-family: "Markazi Text", serif;
 }
 
 
