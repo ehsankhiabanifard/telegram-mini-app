@@ -1,6 +1,5 @@
-
+```javascript
 "use strict";
-
 
 /* =========================================================
    GLOBAL STATE
@@ -58,11 +57,12 @@ const locationButton = document.getElementById("locationButton");
    TELEGRAM MINI APP
 ========================================================= */
 
-if (window.Telegram && window.Telegram.WebApp) {
-
+if (
+    window.Telegram &&
+    window.Telegram.WebApp
+) {
     Telegram.WebApp.ready();
     Telegram.WebApp.expand();
-
 }
 
 
@@ -75,11 +75,13 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
 
-    applyStoreConfig();
-
-    showLoading();
-
     try {
+
+        hideError();
+
+        showLoading();
+
+        applyStoreConfig();
 
         await loadProducts();
 
@@ -89,9 +91,11 @@ async function init() {
 
     } catch (error) {
 
-        console.error("Product loading error:", error);
+        console.error(error);
 
-        showError();
+        hideLoading();
+
+        showError(error);
 
     }
 
@@ -104,10 +108,21 @@ async function init() {
 
 function applyStoreConfig() {
 
-    if (!STORE_CONFIG) return;
+    if (
+        typeof STORE_CONFIG === "undefined"
+    ) {
+        throw new Error(
+            "فایل config.js پیدا نشد یا STORE_CONFIG تعریف نشده است."
+        );
+    }
 
-    storeTitle.textContent = STORE_CONFIG.title;
-    storeSubtitle.textContent = STORE_CONFIG.subtitle;
+
+    storeTitle.textContent =
+        STORE_CONFIG.title;
+
+    storeSubtitle.textContent =
+        STORE_CONFIG.subtitle;
+
 
     telegramButton.href =
         STORE_CONFIG.contact.telegram.url;
@@ -122,35 +137,56 @@ function applyStoreConfig() {
 
 
 /* =========================================================
-   LOAD PRODUCTS JSON
+   LOAD PRODUCTS
 ========================================================= */
 
 async function loadProducts() {
 
-    const response = await fetch(
-        "./data/products.json",
-        {
-            cache: "no-store"
-        }
-    );
+    /*
+       چون پروژه روی GitHub Pages است،
+       مسیر را مستقیماً از ریشه پروژه مشخص می‌کنیم.
+    */
+
+    const productsURL =
+        "/telegram-mini-app/data/products.json";
+
+
+    const response =
+        await fetch(
+            productsURL,
+            {
+                method: "GET",
+                cache: "no-store"
+            }
+        );
 
 
     if (!response.ok) {
 
         throw new Error(
-            `HTTP error: ${response.status}`
+            `خطا در دریافت products.json — HTTP ${response.status}`
         );
 
     }
 
 
-    const data = await response.json();
+    const data =
+        await response.json();
 
 
     if (!Array.isArray(data)) {
 
         throw new Error(
-            "products.json must contain an array"
+            "ساختار products.json صحیح نیست. فایل باید شامل یک آرایه JSON باشد."
+        );
+
+    }
+
+
+    if (data.length === 0) {
+
+        throw new Error(
+            "products.json خالی است و هیچ محصولی در آن وجود ندارد."
         );
 
     }
@@ -162,13 +198,12 @@ async function loadProducts() {
 
 
 /* =========================================================
-   LOADING / ERROR
+   LOADING
 ========================================================= */
 
 function showLoading() {
 
     loading.classList.remove("hidden");
-    errorMessage.classList.add("hidden");
 
 }
 
@@ -180,19 +215,45 @@ function hideLoading() {
 }
 
 
-function showError() {
+/* =========================================================
+   ERROR
+========================================================= */
 
-    loading.classList.add("hidden");
+function showError(error) {
+
     errorMessage.classList.remove("hidden");
+
+
+    const errorText =
+        errorMessage.querySelector("p");
+
+
+    if (errorText) {
+
+        errorText.innerHTML = `
+            اطلاعات محصولات دریافت نشد.
+            <br><br>
+            <small>
+                ${escapeHTML(error.message)}
+            </small>
+        `;
+
+    }
 
 }
 
 
-retryButton.addEventListener("click", () => {
+function hideError() {
 
-    init();
+    errorMessage.classList.add("hidden");
 
-});
+}
+
+
+retryButton.addEventListener(
+    "click",
+    init
+);
 
 
 /* =========================================================
@@ -202,6 +263,7 @@ retryButton.addEventListener("click", () => {
 function renderProducts() {
 
     productsGrid.innerHTML = "";
+
 
     if (!PRODUCTS.length) {
 
@@ -216,13 +278,16 @@ function renderProducts() {
     }
 
 
-    PRODUCTS.forEach(product => {
+    PRODUCTS.forEach(
+        product => {
 
-        const card = createProductCard(product);
+            const card =
+                createProductCard(product);
 
-        productsGrid.appendChild(card);
+            productsGrid.appendChild(card);
 
-    });
+        }
+    );
 
 }
 
@@ -233,10 +298,14 @@ function renderProducts() {
 
 function createProductCard(product) {
 
-    const card = document.createElement("article");
+    const card =
+        document.createElement("article");
 
-    card.className = "product-card";
+    card.className =
+        "product-card";
 
+
+    /* Image */
 
     const imageWrapper =
         document.createElement("div");
@@ -248,20 +317,23 @@ function createProductCard(product) {
     const image =
         document.createElement("img");
 
-    image.className = "product-image";
+    image.className =
+        "product-image";
 
-    image.src = product.images[0];
+    image.src =
+        product.images[0];
 
-    image.alt = product.name;
+    image.alt =
+        product.name;
 
-    image.loading = "lazy";
+    image.loading =
+        "lazy";
 
 
-    image.addEventListener("click", () => {
-
-        openGallery(product);
-
-    });
+    image.addEventListener(
+        "click",
+        () => openGallery(product)
+    );
 
 
     imageWrapper.appendChild(image);
@@ -271,6 +343,7 @@ function createProductCard(product) {
 
     const statusHTML =
         getProductStatusHTML(product);
+
 
     if (statusHTML) {
 
@@ -282,7 +355,7 @@ function createProductCard(product) {
     }
 
 
-    /* Card body */
+    /* Body */
 
     const body =
         document.createElement("div");
@@ -311,7 +384,7 @@ function createProductCard(product) {
         product.description;
 
 
-    /* Buttons */
+    /* Actions */
 
     const actions =
         document.createElement("div");
@@ -323,12 +396,13 @@ function createProductCard(product) {
     const galleryButton =
         document.createElement("button");
 
-    galleryButton.type = "button";
+    galleryButton.type =
+        "button";
 
     galleryButton.className =
         "product-button gallery-button";
 
-    galleryButton.innerHTML =
+    galleryButton.textContent =
         "🖼 مشاهده تصاویر";
 
 
@@ -341,12 +415,13 @@ function createProductCard(product) {
     const detailsButton =
         document.createElement("button");
 
-    detailsButton.type = "button";
+    detailsButton.type =
+        "button";
 
     detailsButton.className =
         "product-button details-button";
 
-    detailsButton.innerHTML =
+    detailsButton.textContent =
         "✦ جزئیات";
 
 
@@ -356,17 +431,29 @@ function createProductCard(product) {
     );
 
 
-    actions.appendChild(galleryButton);
-    actions.appendChild(detailsButton);
+    actions.appendChild(
+        galleryButton
+    );
+
+    actions.appendChild(
+        detailsButton
+    );
 
 
     body.appendChild(title);
+
     body.appendChild(description);
+
     body.appendChild(actions);
 
 
-    card.appendChild(imageWrapper);
-    card.appendChild(body);
+    card.appendChild(
+        imageWrapper
+    );
+
+    card.appendChild(
+        body
+    );
 
 
     return card;
@@ -375,12 +462,15 @@ function createProductCard(product) {
 
 
 /* =========================================================
-   PRODUCT STATUS
+   STATUS
 ========================================================= */
 
 function getProductStatusHTML(product) {
 
-    if (product.status === "out_of_stock") {
+    if (
+        product.status ===
+        "out_of_stock"
+    ) {
 
         return `
             <div class="product-status-stamp">
@@ -392,7 +482,10 @@ function getProductStatusHTML(product) {
     }
 
 
-    if (product.status === "restocking") {
+    if (
+        product.status ===
+        "restocking"
+    ) {
 
         return `
             <div class="product-status-restocking">
@@ -414,13 +507,20 @@ function getProductStatusHTML(product) {
 
 function openGallery(product) {
 
-    if (!product || !product.images?.length) {
+    if (
+        !product ||
+        !Array.isArray(product.images) ||
+        product.images.length === 0
+    ) {
         return;
     }
 
 
-    currentProduct = product;
-    currentImageIndex = 0;
+    currentProduct =
+        product;
+
+    currentImageIndex =
+        0;
 
 
     galleryTitle.textContent =
@@ -433,419 +533,72 @@ function openGallery(product) {
     updateGallery();
 
 
-    galleryModal.classList.remove("hidden");
+    galleryModal.classList.remove(
+        "hidden"
+    );
 
-    document.body.classList.add("modal-open");
+    document.body.classList.add(
+        "modal-open"
+    );
 
 
-    preloadGalleryImages(product);
+    preloadGalleryImages(
+        product
+    );
 
 }
 
 
 function updateGallery() {
 
-    if (!currentProduct) return;
+    if (!currentProduct) {
+        return;
+    }
+
+
+    const images =
+        currentProduct.images;
 
 
     const imageURL =
-        currentProduct.images[currentImageIndex];
+        images[currentImageIndex];
 
 
-    galleryImage.removeAttribute("src");
+    galleryImage.src =
+        imageURL;
 
 
-    requestAnimationFrame(() => {
-
-        galleryImage.src = imageURL;
-
-        galleryImage.alt =
-            `${currentProduct.name} - تصویر ${currentImageIndex + 1}`;
-
-    });
+    galleryImage.alt =
+        `${currentProduct.name} - تصویر ${currentImageIndex + 1}`;
 
 
     galleryCounter.textContent =
-        `${currentImageIndex + 1} / ${currentProduct.images.length}`;
+        `${currentImageIndex + 1} / ${images.length}`;
 
 }
 
 
 function preloadGalleryImages(product) {
 
-    product.images.forEach(url => {
-
-        const img = new Image();
-
-        img.src = url;
-
-    });
-
-}
-
-
-function nextImage() {
-
-    if (!currentProduct) return;
-
-
-    if (
-        currentImageIndex <
-        currentProduct.images.length - 1
-    ) {
-
-        currentImageIndex++;
-
-    } else {
-
-        currentImageIndex = 0;
-
-    }
-
-
-    updateGallery();
-
-}
-
-
-function previousImage() {
-
-    if (!currentProduct) return;
-
-
-    if (currentImageIndex > 0) {
-
-        currentImageIndex--;
-
-    } else {
-
-        currentImageIndex =
-            currentProduct.images.length - 1;
-
-    }
-
-
-    updateGallery();
-
-}
-
-
-function closeGallery() {
-
-    galleryModal.classList.add("hidden");
-
-    document.body.classList.remove("modal-open");
-
-    galleryImage.removeAttribute("src");
-
-    currentProduct = null;
-
-}
-
-
-/* =========================================================
-   DETAILS
-========================================================= */
-
-function openDetails(product) {
-
-    if (!product) return;
-
-
-    currentProduct = product;
-
-
-    detailsCode.textContent =
-        `کد ${product.id}`;
-
-    detailsTitle.textContent =
-        product.name;
-
-    detailsDescription.textContent =
-        product.description;
-
-
-    renderDetails(product);
-
-    renderDetailsStatus(product);
-
-
-    detailsModal.classList.remove("hidden");
-
-    document.body.classList.add("modal-open");
-
-}
-
-
-function renderDetails(product) {
-
-    detailsTable.innerHTML = "";
-
-
-    if (!product.details) return;
-
-
-    Object.entries(product.details)
-        .forEach(([key, value]) => {
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "details-row";
-
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "details-label";
-
-            label.textContent =
-                key;
-
-
-            const content =
-                document.createElement("div");
-
-            content.className =
-                "details-value";
-
-            content.textContent =
-                value;
-
-
-            row.appendChild(label);
-            row.appendChild(content);
-
-
-            detailsTable.appendChild(row);
-
-        });
-
-}
-
-
-function renderDetailsStatus(product) {
-
-    detailsStatus.className =
-        "details-status";
-
-
-    if (product.status === "out_of_stock") {
-
-        detailsStatus.classList.add(
-            "status-out-of-stock"
-        );
-
-        detailsStatus.textContent =
-            "اتمام موجودی";
-
-        detailsStatus.classList.remove("hidden");
-
-        return;
-
-    }
-
-
-    if (product.status === "restocking") {
-
-        detailsStatus.classList.add(
-            "status-restocking"
-        );
-
-        detailsStatus.textContent =
-            "شارژ مجدد";
-
-        detailsStatus.classList.remove("hidden");
-
-        return;
-
-    }
-
-
-    detailsStatus.classList.add("hidden");
-
-}
-
-
-function closeDetails() {
-
-    detailsModal.classList.add("hidden");
-
-    document.body.classList.remove("modal-open");
-
-    currentProduct = null;
-
-}
-
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
-galleryClose.addEventListener(
-    "click",
-    closeGallery
-);
-
-
-galleryPrev.addEventListener(
-    "click",
-    previousImage
-);
-
-
-galleryNext.addEventListener(
-    "click",
-    nextImage
-);
-
-
-detailsClose.addEventListener(
-    "click",
-    closeDetails
-);
-
-
-/* Close when clicking overlay */
-
-galleryModal.addEventListener(
-    "click",
-    event => {
-
-        if (event.target === galleryModal) {
-
-            closeGallery();
-
-        }
-
-    }
-);
-
-
-detailsModal.addEventListener(
-    "click",
-    event => {
-
-        if (event.target === detailsModal) {
-
-            closeDetails();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   KEYBOARD CONTROLS
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            !galleryModal.classList.contains("hidden")
-        ) {
-
-            if (event.key === "Escape") {
-
-                closeGallery();
-
-            }
-
-
-            if (event.key === "ArrowRight") {
-
-                nextImage();
-
-            }
-
-
-            if (event.key === "ArrowLeft") {
-
-                previousImage();
-
-            }
-
-        }
-
-
-        if (
-            !detailsModal.classList.contains("hidden") &&
-            event.key === "Escape"
-        ) {
-
-            closeDetails();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   TOUCH SWIPE FOR GALLERY
-========================================================= */
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-
-galleryModal.addEventListener(
-    "touchstart",
-    event => {
-
-        touchStartX =
-            event.changedTouches[0].screenX;
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-galleryModal.addEventListener(
-    "touchend",
-    event => {
-
-        touchEndX =
-            event.changedTouches[0].screenX;
-
-        handleSwipe();
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-function handleSwipe() {
-
-    const difference =
-        touchEndX - touchStartX;
-
-
-    if (Math.abs(difference) < 50) {
+    if (!product.images) {
         return;
     }
 
 
-    if (difference > 0) {
+    product.images.forEach(
+        url => {
 
-        previousImage();
+            const img =
+                new Image();
 
-    } else {
+            img.src =
+                url;
 
-        nextImage();
-
-    }
+        }
+    );
 
 }
-console.log("APP.JS LOADED");
-console.log("PRODUCTS:", PRODUCTS);
 
+
+function ne
+```
