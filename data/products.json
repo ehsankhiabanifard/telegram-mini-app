@@ -3,7 +3,7 @@
     "id": "100",
     "name": "کد 100",
     "description": "باکسی اورسایز ( لش )",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-100-0.jpg",
       "./images/IMG-100-1.jpg",
@@ -109,7 +109,7 @@
     "id": "105",
     "name": "کد 105",
     "description": "باکسی اورسایز ( لش ) lululemon",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-105-0.jpg",
       "./images/IMG-105-1.jpg",
@@ -195,7 +195,7 @@
     "id": "109",
     "name": "کد 109",
     "description": "باکسی اورسایز ( لش ) FASHION EASY",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-109-0.jpg",
       "./images/IMG-109-1.jpg",
@@ -283,7 +283,7 @@
     "id": "113",
     "name": "کد 113",
     "description": "باکسی اورسایز ( لش ) DAILY",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-113-0.jpg",
       "./images/IMG-113-1.jpg",
@@ -306,7 +306,7 @@
     "id": "114",
     "name": "کد 114",
     "description": "باکسی اورسایز ( لش ) Revenie",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-114-0.jpg",
       "./images/IMG-114-1.jpg",
@@ -329,7 +329,7 @@
     "id": "115",
     "name": "کد 115",
     "description": "باکسی اورسایز ( لش ) Almost Gameday",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-115-0.jpg",
       "./images/IMG-115-1.jpg",
@@ -351,7 +351,7 @@
     "id": "116",
     "name": "کد 116",
     "description": "باکسی اورسایز ( لش )",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-116-0.jpg",
       "./images/IMG-116-1.jpg",
@@ -374,7 +374,7 @@
     "id": "117",
     "name": "کد 117",
     "description": "باکسی اورسایز ( لش ) SARAR",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-117-0.jpg",
       "./images/IMG-117-1.jpg",
@@ -397,7 +397,7 @@
     "id": "118",
     "name": "کد 118",
     "description": "باکسی اورسایز ( لش ) Revenie",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-118-0.jpg",
       "./images/IMG-118-1.jpg",
@@ -598,7 +598,7 @@
     "id": "127",
     "name": "کد 127",
     "description": "باکسی اورسایز ( لش ) DIESEL",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-127-0.jpg",
       "./images/IMG-127-1.jpg",
@@ -690,7 +690,7 @@
     "id": "133",
     "name": "کد 133",
     "description": "باکسی اورسایز ( لش ) MIU MIU",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-133-0.jpg",
       "./images/IMG-133-1.jpg",
@@ -1051,7 +1051,7 @@
     "id": "151",
     "name": "کد 151",
     "description": "باکسی اورسایز ( لش ) VANS",
-    "status": "normal",
+    "status": "out_of_stock",
     "images": [
       "./images/IMG-151-0.jpg",
       "./images/IMG-151-1.jpg",
