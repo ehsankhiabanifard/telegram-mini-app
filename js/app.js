@@ -1356,7 +1356,13 @@ function renderDetailsTable(product) {
         product.details
     ).forEach(
         ([key, value]) => {
-
+            // مدل و استایل قبلاً بالای جدول نمایش داده شده‌اند
+            if (
+                key === "مدل" ||
+                key === "استایل"
+            ) {
+                return;
+            }
             const row =
                 document.createElement(
                     "tr"
