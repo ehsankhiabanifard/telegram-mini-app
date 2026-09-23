@@ -114,6 +114,15 @@ if (
 
     Telegram.WebApp.expand();
 
+       // فعال کردن ظاهر Dark برای محیط Mini App
+    Telegram.WebApp.setHeaderColor("#0B0B0D");
+    Telegram.WebApp.setBackgroundColor("#0B0B0D");
+
+    // هماهنگ کردن رنگ نوار پایین در صورت پشتیبانی
+    if (typeof Telegram.WebApp.setBottomBarColor === "function") {
+        Telegram.WebApp.setBottomBarColor("#0B0B0D");
+    }
+   
 }
 
 
